@@ -1,6 +1,7 @@
 import React from 'react';
 import tododatas from './tododatas'
 import TodoItem from './ToDoItem'
+import { Button } from 'react-bootstrap';
 
 class App extends React.Component {
   constructor() {
@@ -30,9 +31,16 @@ class App extends React.Component {
 
     return (
       <div className="todo-list">
-        <h1> TO-DO LIST </h1>
-        <h3>Hey Chetan, what's on your mind today?</h3>
-        {todoItems}
+        <div >
+          <h1> TO-DO LIST </h1>
+          <h3>Hey Chetan, what's on your mind today?</h3>
+          {todoItems}
+        </div>
+
+        <div className="todo-button">
+          <Button bsStyle="success">Add Task</Button>
+          <Button bsStyle="danger">Delete Task</Button>
+        </div>
       </div>
     )
   }

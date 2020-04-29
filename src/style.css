@@ -1,5 +1,5 @@
-body {
-    background-color: #3279a8;
+body { 
+    background-color: orange;
 }
 
 .todo-list {
@@ -43,6 +43,21 @@ h1 {
 
 h3 {
     text-align: center;
+}
+
+.todo-button {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 30px 20px 0;
+    width: 70%;
+    border-bottom: 1px solid #cecece;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    font-size: 15px;
+    color: #333333;
+
+/**other codes**/
 }
 
 input[type=checkbox] {

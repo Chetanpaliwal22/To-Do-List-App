@@ -2,12 +2,12 @@ const todosData = [
     {
         id: 1,
         text: "Implement an to-do app using react",
-        completed: false
+        completed: true
     },
     {
         id: 2,
         text: "push the code to git and update readme",
-        completed: true
+        completed: false
     } 
 ]
 
