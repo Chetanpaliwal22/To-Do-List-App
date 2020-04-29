@@ -38,11 +38,25 @@ class App extends React.Component {
         </div>
 
         <div className="todo-button">
-          <Button bsStyle="success">Add Task</Button>
-          <Button bsStyle="danger">Delete Task</Button>
+          <Button bsstyle="success" onClick={this.addTask}>Add Task</Button>
+          <Button bsstyle="danger" onClick={this.deleteTask}>Delete Task</Button>
         </div>
       </div>
     )
+  }
+
+  addTask() {
+    let len = tododatas.length
+    tododatas.push({
+      id: len + 1,
+      text: "new task push the code to git and update readme",
+      completed: false
+    })
+    console.log(tododatas.length)
+  }
+
+  deleteTask() {
+    tododatas.pop();
   }
 
 }
