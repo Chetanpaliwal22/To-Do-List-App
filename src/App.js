@@ -1,15 +1,26 @@
 import React from 'react';
 import tododatas from './tododatas'
 import TodoItem from './ToDoItem'
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button'
+import Popup from './Popup';
 
 class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      todos: tododatas
+      todos: tododatas,
+      showPopup: false
     }
+
     this.handleChange = this.handleChange.bind(this)
+    this.addTask = this.addTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+  }
+
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   }
 
   handleChange(id) {
@@ -37,8 +48,21 @@ class App extends React.Component {
           {todoItems}
         </div>
 
+        <Button type='submit'>Submit</Button>
         <div className="todo-button">
-          <Button bsstyle="success" onClick={this.addTask}>Add Task</Button>
+        <Button variant="danger">Danger</Button>
+        <Button type='submit'>Submit</Button>
+        <Button variant="outline-primary">Primary</Button>{' '}
+          <Button bsstyle="success" onClick={this.togglePopup.bind(this)}>Add Task</Button>
+
+          {this.state.showPopup ?
+            <Popup
+              text='Click "Close Button" to hide popup'
+              closePopup={this.togglePopup.bind(this)}
+            />
+            : null
+          }
+
           <Button bsstyle="danger" onClick={this.deleteTask}>Delete Task</Button>
         </div>
       </div>
@@ -46,17 +70,23 @@ class App extends React.Component {
   }
 
   addTask() {
+    this.togglePopup.bind(this)
     let len = tododatas.length
     tododatas.push({
       id: len + 1,
       text: "new task push the code to git and update readme",
       completed: false
     })
-    console.log(tododatas.length)
+    this.setState({
+      todos: tododatas
+    })
   }
 
   deleteTask() {
     tododatas.pop();
+    this.setState({
+      todos: tododatas
+    })
   }
 
 }
