@@ -8,7 +8,7 @@ const todosData = [
         id: 2,
         text: "push the code to git and update readme",
         completed: false
-    } 
+    }
 ]
 
 export default todosData

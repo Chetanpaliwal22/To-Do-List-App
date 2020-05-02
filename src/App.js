@@ -2,14 +2,13 @@ import React from 'react';
 import tododatas from './tododatas'
 import TodoItem from './ToDoItem'
 import Button from 'react-bootstrap/Button'
-import Popup from './Popup';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component {
   constructor() {
     super()
     this.state = {
       todos: tododatas,
-      showPopup: false
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -17,20 +16,18 @@ class App extends React.Component {
     this.deleteTask = this.deleteTask.bind(this);
   }
 
-  togglePopup() {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-  }
-
   handleChange(id) {
+    
     this.setState(prevState => {
-      const updatedTodos = prevState.todos.map(todo => {
+      
+      let updatedTodos = prevState.todos.map(todo => {
+        //console.log(todo.completed)
         if (todo.id === id) {
           todo.completed = !todo.completed
         }
         return todo
       })
+      
       return {
         todos: updatedTodos
       }
@@ -48,29 +45,15 @@ class App extends React.Component {
           {todoItems}
         </div>
 
-        <Button type='submit'>Submit</Button>
         <div className="todo-button">
-        <Button variant="danger">Danger</Button>
-        <Button type='submit'>Submit</Button>
-        <Button variant="outline-primary">Primary</Button>{' '}
-          <Button bsstyle="success" onClick={this.togglePopup.bind(this)}>Add Task</Button>
-
-          {this.state.showPopup ?
-            <Popup
-              text='Click "Close Button" to hide popup'
-              closePopup={this.togglePopup.bind(this)}
-            />
-            : null
-          }
-
-          <Button bsstyle="danger" onClick={this.deleteTask}>Delete Task</Button>
+          <Button variant="outline-success" onClick={this.addTask}>Add Task</Button>
+          <Button variant="outline-danger" onClick={this.deleteTask}>Delete Task</Button>
         </div>
       </div>
     )
   }
 
   addTask() {
-    this.togglePopup.bind(this)
     let len = tododatas.length
     tododatas.push({
       id: len + 1,
