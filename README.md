@@ -75,7 +75,7 @@ npm run deploy
 
 ## Project Admin
 
-| ![](images/chetan.jpeg) |
+| ![](images/chetan.jpg) |
 | :----------------------------------------------------------: |
 | **[Chetan Paliwal](https://www.linkedin.com/in/Chetanpaliwal22/)**  |
 
