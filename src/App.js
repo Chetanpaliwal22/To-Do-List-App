@@ -1,37 +1,42 @@
-import React from 'react';
-import tododatas from './tododatas'
+import React from 'react'
 import TodoItem from './ToDoItem'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import { db } from './firebase'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 class App extends React.Component {
   constructor() {
     super()
+
     this.state = {
-      todos: tododatas,
+      todos: [],
+      showForm: false
     }
 
-    this.handleChange = this.handleChange.bind(this)
-    this.addTask = this.addTask.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this)
   }
 
-  handleChange(id) {
-    
-    this.setState(prevState => {
-      
-      let updatedTodos = prevState.todos.map(todo => {
-        //console.log(todo.completed)
-        if (todo.id === id) {
-          todo.completed = !todo.completed
-        }
-        return todo
-      })
-      
-      return {
-        todos: updatedTodos
-      }
+  async componentDidMount() {
+    let tododatas = await db.collection("DataList").get()
+    let list = tododatas.docs.map(doc => {
+      return doc.data()
     })
+    this.setState({
+      todos: list
+    })
+  }
+
+  handleChange = (id) => {
+    let updatedTodos = this.state.todos.map(todo => {
+      //console.log(todo.completed)
+      if (todo.id === id) {
+        todo.completed = !todo.completed
+      }
+      return todo
+    })
+
+    this.setState(updatedTodos)
   }
 
   render() {
@@ -44,31 +49,62 @@ class App extends React.Component {
           <h3>Hey Chetan, what's on your mind today?</h3>
           {todoItems}
         </div>
-
+        {this.state.showForm ? this.showForm() : null}
         <div className="todo-button">
-          <Button variant="outline-success" onClick={this.addTask}>Add Task</Button>
+          <Button variant="outline-success" onClick={() => this.setState({ showForm: true })}>Add Task</Button>
           <Button variant="outline-danger" onClick={this.deleteTask}>Delete Task</Button>
         </div>
       </div>
     )
   }
 
-  addTask() {
-    let len = tododatas.length
-    tododatas.push({
-      id: len + 1,
-      text: "new task push the code to git and update readme",
-      completed: false
-    })
-    this.setState({
-      todos: tododatas
-    })
+  showForm = () => {
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Group controlId="formTask">
+          <Form.Label>Task Detail</Form.Label>
+          <Form.Control type="text" placeholder="Enter task name." ref={node => (this.inputNode = node)} />
+          <Form.Text className="text-muted">
+            We'll be pushing this task to Firebase DB.
+        </Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formBasicCheckbox">
+          <Form.Check type="checkbox" label="Prove that, you are not a robot." />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Add
+      </Button>
+      </Form>
+    );
   }
 
-  deleteTask() {
-    tododatas.pop();
+  handleSubmit = (event) => {
+    this.setState({ showForm: false })
+    let id = Date.now();
+    let newTask = {
+      id: id,
+      text: this.inputNode.value,
+      completed: false
+    }
+    db.collection('DataList').doc(id.toString()).set(newTask)
+    this.state.todos.push(newTask)
+  }
+
+  async deleteTask () {
+    let updatedTodos = this.state.todos.map(todo => {
+      if (todo.completed) {
+        db.collection("DataList")
+          .doc(todo.id.toString())
+          .delete()
+      }
+      return todo
+    })
+    let tododatas =await db.collection("DataList").get()
+    let list = tododatas.docs.map(doc => {
+      return doc.data()
+    })
     this.setState({
-      todos: tododatas
+      todos: list
     })
   }
 
