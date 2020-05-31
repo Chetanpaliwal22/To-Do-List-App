@@ -1,6 +1,6 @@
 ## What is React?
 
-React is an open-sourced Javascript library for building user interfaces developed and maintained by Facebook developers.
+React is an open-sourced JavaScript library for building user interfaces developed and maintained by Facebook developers.
 
 ## What is Firestore DB?
 
@@ -52,7 +52,7 @@ You can use the source code of the current [repository](https://github.com/Cheta
 
 #### Step 1: Signup for Firebase
 
-Sign to [Firebase](https://firebase.google.com/) using your Google account, and click on GO TO CONSOLE(top-right). 
+Sign to [Firebase](https://firebase.google.com/) using your Google account, and click on GO TO CONSOLE (top-right). 
 
 #### Step 2: Add project
 
@@ -60,7 +60,7 @@ Create an project by clicking on add project, For this tutorial we are keeping i
 
 #### Step 3: Create test rule for your DB
 
-Click on the Database tile left sidebar, then click on create database. Select test rule as security rule, this will enable you use it without authentication. You can change security rule for a production build.
+Click on the Database tile left sidebar, then click on create database. Select test rule as security rule, this will enable you access it without authentication. You can change security rule later for a production build.
 
 #### Step 4: Integrating Firebase to our application
 
@@ -82,6 +82,7 @@ Your collection in Firebase should look like this:
 #### Step 6: DB operation on noSQL DB
 
 Use the following code to save and delete data
+
 Save:
 ```
  let newTask = {
