@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { db } from './firebase'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import firebase from "firebase";
 
 class App extends React.Component {
   constructor() {
@@ -11,13 +12,46 @@ class App extends React.Component {
 
     this.state = {
       todos: [],
-      showForm: false
+      showForm: false,
+      userInfo: {}
     }
 
-    this.deleteTask = this.deleteTask.bind(this)
   }
 
   async componentDidMount() {
+    //Signing in anonymous user
+    try {
+      await firebase.auth().signInAnonymously()
+    }
+    catch (error) {
+      // Handle Errors here.
+
+      //   var errorCode = error.code;
+      // var errorMessage = error.message;
+      //  console.log("Error Code: "+errorCode+" ErrorMessage: "+errorMessage)
+      return
+    }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        console.log("uid: " + uid)
+        let userInfo = {
+          isAnonymous,
+          uid
+        }
+        this.setState({ userInfo })
+      } else {
+        // User is signed out.
+      }
+    });
+
+    this.updateContent()
+  }
+
+  updateContent = async () => {
     let tododatas = await db.collection("DataList").get()
     let list = tododatas.docs.map(doc => {
       return doc.data()
@@ -29,7 +63,6 @@ class App extends React.Component {
 
   handleChange = (id) => {
     let updatedTodos = this.state.todos.map(todo => {
-      //console.log(todo.completed)
       if (todo.id === id) {
         todo.completed = !todo.completed
       }
@@ -90,7 +123,7 @@ class App extends React.Component {
     this.state.todos.push(newTask)
   }
 
-  async deleteTask () {
+  deleteTask = async () => {
     let updatedTodos = this.state.todos.map(todo => {
       if (todo.completed) {
         db.collection("DataList")
@@ -99,7 +132,8 @@ class App extends React.Component {
       }
       return todo
     })
-    let tododatas =await db.collection("DataList").get()
+
+    let tododatas = await db.collection("DataList").get()
     let list = tododatas.docs.map(doc => {
       return doc.data()
     })
