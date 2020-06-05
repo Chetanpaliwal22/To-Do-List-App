@@ -96,13 +96,13 @@ class App extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Group controlId="formTask">
           <Form.Label>Task Detail</Form.Label>
-          <Form.Control type="text" placeholder="Enter task name." ref={node => (this.inputNode = node)} />
+          <Form.Control type="text" placeholder="Enter task name." required ref={node => (this.inputNode = node)} />
           <Form.Text className="text-muted">
             We'll be pushing this task to Firebase DB.
         </Form.Text>
         </Form.Group>
         <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Prove that, you are not a robot." />
+          <Form.Check type="checkbox" required label="Prove that, you are not a robot." />
         </Form.Group>
         <Button variant="primary" type="submit">
           Add
