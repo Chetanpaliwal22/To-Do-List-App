@@ -15,7 +15,7 @@ class App extends React.Component {
       showForm: false,
       userInfo: {}
     }
-
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   async componentDidMount() {
@@ -124,7 +124,7 @@ class App extends React.Component {
   }
 
   deleteTask = async () => {
-    let updatedTodos = this.state.todos.map(todo => {
+    let updatedTodos = await this.state.todos.map(todo => {
       if (todo.completed) {
         db.collection("DataList")
           .doc(todo.id.toString())
@@ -137,9 +137,8 @@ class App extends React.Component {
     let list = tododatas.docs.map(doc => {
       return doc.data()
     })
-    this.setState({
-      todos: list
-    })
+    this.setState.todos = list;
+    window.location.reload(false);
   }
 
 }
