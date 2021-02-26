@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot for App component 1`] = `
+<div
+  className="todo-list"
+>
+  <div>
+    <h1>
+       TO-DO LIST 
+    </h1>
+    <h3>
+      Hey Chetan, what's on your mind today?
+    </h3>
+  </div>
+  <div
+    className="todo-button"
+  >
+    <button
+      className="btn btn-outline-success"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Add Task
+    </button>
+    <button
+      className="btn btn-outline-danger"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Delete Task
+    </button>
+  </div>
+</div>
+`;
