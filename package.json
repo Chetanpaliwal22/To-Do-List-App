@@ -13,7 +13,9 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "reactstrap": "^8.9.0",
     "save-dev": "0.0.1-security",
     "uuid": "^8.1.0"
   },
