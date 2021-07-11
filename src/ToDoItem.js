@@ -6,7 +6,7 @@ function TodoItem(props) {
         <div className="todo-item">
             <label>
             <input 
-                type="checkbox" 
+                type="radio" 
                 checked={props.item.completed} 
                 onChange={() => props.handleChange(props.item.id)}
             />

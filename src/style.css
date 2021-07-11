@@ -61,11 +61,11 @@ h3 {
 /**other codes**/
 }
 
-input[type=checkbox] {
+input[type=radio] {
     margin-right: 10px;
     font-size: 30px;
 }
 
-input[type=checkbox]:focus {
+input[type=radio]:focus {
     outline: 0;
 }

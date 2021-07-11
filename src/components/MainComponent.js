@@ -15,7 +15,6 @@ class Main extends Component {
             showForm: false,
             userInfo: {}
         }
-        this.deleteTask = this.deleteTask.bind(this);
     }
 
     async componentDidMount() {
@@ -56,13 +55,12 @@ class Main extends Component {
     }
 
     handleChange = (id) => {
-        let updatedTodos = this.state.todos.map(todo => {
-            if (todo.id === id) {
-                todo.completed = !todo.completed
-            }
-            return todo
-        })
-        this.setState(updatedTodos)
+        db.collection("ToDoList").doc(id.toString()).delete().then(() => {
+            let updatedTodos = this.state.todos.filter(function (todo) {
+                return todo.id !== id;
+            });
+            this.setState({ todos: updatedTodos });
+        });
     }
 
     render() {
@@ -78,8 +76,7 @@ class Main extends Component {
                     </div>
                     {this.state.showForm ? this.showForm() : null}
                     <div className="todo-button">
-                        <Button variant="outline-success" onClick={() => this.setState({ showForm: true })}>Add Task</Button>
-                        <Button variant="outline-danger" onClick={this.deleteTask}>Delete Task</Button>
+                        <Button variant="outline-success" onClick={() => this.setState({ showForm: true })} disabled={this.state.showForm}>Add Task</Button>
                     </div>
                 </div>
             </div>
@@ -125,17 +122,6 @@ class Main extends Component {
         }).catch((error) => {
             console.error("Error writing document: ", error);
         });
-    }
-
-    deleteTask = async () => {
-        this.state.todos.map(todo => {
-            if (todo.completed) {
-                db.collection("ToDoList")
-                    .doc(todo.id.toString())
-                    .delete()
-            }
-            return todo
-        })
     }
 
 }
