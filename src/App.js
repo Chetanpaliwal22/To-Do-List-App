@@ -24,12 +24,7 @@ class App extends React.Component {
       await firebase.auth().signInAnonymously()
     }
     catch (error) {
-      // Handle Errors here.
-
-      //   var errorCode = error.code;
-      // var errorMessage = error.message;
-      //  console.log("Error Code: "+errorCode+" ErrorMessage: "+errorMessage)
-      return
+      //Handle Error here
     }
 
     firebase.auth().onAuthStateChanged((user) => {
@@ -37,7 +32,6 @@ class App extends React.Component {
         // User is signed in.
         var isAnonymous = user.isAnonymous;
         var uid = user.uid;
-        console.log("uid: " + uid)
         let userInfo = {
           isAnonymous,
           uid
@@ -52,7 +46,7 @@ class App extends React.Component {
   }
 
   updateContent = async () => {
-    let tododatas = await db.collection("DataList").get()
+    let tododatas = await db.collection("ToDoList").get()
     let list = tododatas.docs.map(doc => {
       return doc.data()
     })
@@ -68,7 +62,6 @@ class App extends React.Component {
       }
       return todo
     })
-
     this.setState(updatedTodos)
   }
 
@@ -79,7 +72,7 @@ class App extends React.Component {
       <div className="todo-list">
         <div >
           <h1> TO-DO LIST </h1>
-          <h3>Hey Chetan, what's on your mind today?</h3>
+          <h3>Hey there, what's on your mind today?</h3>
           {todoItems}
         </div>
         {this.state.showForm ? this.showForm() : null}
@@ -96,22 +89,23 @@ class App extends React.Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Group controlId="formTask">
           <Form.Label>Task Detail</Form.Label>
-          <Form.Control type="text" placeholder="Enter task name." required ref={node => (this.inputNode = node)} />
+          <Form.Control type="text" maxLength={30} placeholder="Enter task name." required ref={node => (this.inputNode = node)} />
           <Form.Text className="text-muted">
-            We'll be pushing this task to Firebase DB.
-        </Form.Text>
+            We'll be pushing this task to DB.
+          </Form.Text>
         </Form.Group>
         <Form.Group controlId="formBasicCheckbox">
           <Form.Check type="checkbox" required label="Prove that, you are not a robot." />
         </Form.Group>
         <Button variant="primary" type="submit">
           Add
-      </Button>
+        </Button>
       </Form>
     );
   }
 
   handleSubmit = (event) => {
+    event.preventDefault();
     this.setState({ showForm: false })
     let id = Date.now();
     let newTask = {
@@ -119,26 +113,26 @@ class App extends React.Component {
       text: this.inputNode.value,
       completed: false
     }
-    db.collection('DataList').doc(id.toString()).set(newTask)
-    this.state.todos.push(newTask)
+    db.collection('ToDoList').doc(id.toString()).set(newTask).then(() => {
+      this.state.todos.push(newTask)
+      this.setState({
+        todos: this.state.todos,
+        showForm: false
+      })
+    }).catch((error) => {
+      console.error("Error writing document: ", error);
+    });
   }
 
   deleteTask = async () => {
-    let updatedTodos = await this.state.todos.map(todo => {
+    this.state.todos.map(todo => {
       if (todo.completed) {
-        db.collection("DataList")
+        db.collection("ToDoList")
           .doc(todo.id.toString())
           .delete()
       }
       return todo
     })
-
-    let tododatas = await db.collection("DataList").get()
-    let list = tododatas.docs.map(doc => {
-      return doc.data()
-    })
-    this.setState.todos = list;
-    window.location.reload(false);
   }
 
 }
