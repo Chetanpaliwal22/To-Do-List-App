@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { db } from '../firebase';
 import firebase from "firebase";
+import Header from './HeaderComponent';
 
 class Main extends Component {
 
@@ -68,9 +69,9 @@ class Main extends Component {
 
         return (
             <div>
+                <Header />
                 <div className="todo-list">
                     <div >
-                        <h1> TO-DO LIST </h1>
                         <h3>Hey there, what's on your mind today?</h3>
                         {todoItems}
                     </div>
