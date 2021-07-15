@@ -1,7 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-    Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Button,
+    Navbar, NavbarBrand, Nav, NavLink, NavbarToggler, Collapse, NavItem, Button,
 } from 'reactstrap';
 
 class Header extends React.Component {
@@ -16,7 +16,10 @@ class Header extends React.Component {
                         <NavbarBrand className="mr-auto" href="/">TO-Do List</NavbarBrand>
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
-                                <NavItem><span className="fa fa-list fa-lg"></span>  Completed</NavItem>
+                            <NavItem>
+                                    <NavLink className="nav-link" to='/home'><span className="fa fa-home fa-lg"></span> Completed</NavLink>
+                                </NavItem>
+                                
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>

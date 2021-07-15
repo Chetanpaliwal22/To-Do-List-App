@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import TodoItem from '../ToDoItem';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import { db } from '../firebase';
 import firebase from "firebase";
 import Header from './HeaderComponent';
+import AddTaskForm from "./AddTaskFormComponent";
 
 class Main extends Component {
 
@@ -46,13 +46,25 @@ class Main extends Component {
     }
 
     updateContent = async () => {
-        let tododatas = await db.collection("ToDoList").get()
+        let tododatas = await db.collection("ToDoList").where("completed", "==", false).get();
         let list = tododatas.docs.map(doc => {
             return doc.data()
         })
         this.setState({
             todos: list
         })
+    };
+
+    addTodo = (newTodo) => {
+        db.collection('ToDoList').doc(newTodo.id.toString()).set(newTodo).then(() => {
+            this.state.todos.push(newTodo)
+            this.setState({
+                todos: this.state.todos,
+                showForm: false
+            })
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+        });
     }
 
     handleChange = (id) => {
@@ -89,43 +101,8 @@ class Main extends Component {
 
     showForm = () => {
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <Form.Group controlId="formTask">
-                    <Form.Label>Task Detail</Form.Label>
-                    <Form.Control type="text" maxLength={30} placeholder="Enter task name." required ref={node => (this.inputNode = node)} />
-                    <Form.Text className="text-muted">
-                        We'll be pushing this task to DB.
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" required label="Prove that, you are not a robot." />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Add
-                </Button>
-            </Form>
-
+            <AddTaskForm addToDo={this.addTodo.bind(this)} state={this.state} />
         );
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({ showForm: false })
-        let id = Date.now();
-        let newTask = {
-            id: id,
-            text: this.inputNode.value,
-            completed: false
-        }
-        db.collection('ToDoList').doc(id.toString()).set(newTask).then(() => {
-            this.state.todos.push(newTask)
-            this.setState({
-                todos: this.state.todos,
-                showForm: false
-            })
-        }).catch((error) => {
-            console.error("Error writing document: ", error);
-        });
     }
 
 }
