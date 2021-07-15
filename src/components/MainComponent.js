@@ -56,7 +56,10 @@ class Main extends Component {
     }
 
     handleChange = (id) => {
-        db.collection("ToDoList").doc(id.toString()).delete().then(() => {
+
+        db.collection("ToDoList").doc(id.toString()).update({
+            "completed": true,
+        }).then(() => {
             let updatedTodos = this.state.todos.filter(function (todo) {
                 return todo.id !== id;
             });
