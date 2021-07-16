@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-    Navbar, NavbarBrand, Nav, NavLink, NavbarToggler, Collapse, NavItem, Button,
+    Navbar, NavbarBrand, Nav, NavLink, Collapse, NavItem, Button,
 } from 'reactstrap';
 
 class Header extends React.Component {
@@ -12,14 +12,12 @@ class Header extends React.Component {
             <div>
                 <Navbar dark expand="md header">
                     <div className="container">
-                        <NavbarToggler onClick={this.toggleNav} />
                         <NavbarBrand className="mr-auto" href="/">TO-Do List</NavbarBrand>
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
                             <NavItem>
-                                    <NavLink className="nav-link" to='/home'><span className="fa fa-home fa-lg"></span> Completed</NavLink>
+                                    <NavLink className="nav-link" href='/' onClick={this.showCompletedTasks}><span className="fa fa-home fa-lg"></span>Completed Task</NavLink>
                                 </NavItem>
-                                
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>

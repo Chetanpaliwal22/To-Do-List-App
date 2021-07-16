@@ -14,7 +14,8 @@ class Main extends Component {
         this.state = {
             todos: [],
             showForm: false,
-            userInfo: {}
+            userInfo: {},
+            completedTaskMode: false
         }
     }
 
@@ -46,7 +47,7 @@ class Main extends Component {
     }
 
     updateContent = async () => {
-        let tododatas = await db.collection("ToDoList").where("completed", "==", false).get();
+        let tododatas = await db.collection("ToDoList").get();
         let list = tododatas.docs.map(doc => {
             return doc.data()
         })
@@ -80,23 +81,30 @@ class Main extends Component {
     }
 
     render() {
-        const todoItems = this.state.todos.map(item => <TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
+        const todoItems = this.state.todos.filter((item) => { return item.completed === this.state.completedTaskMode }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
 
         return (
             <div>
-                <Header />
-                <div className="todo-list">
-                    <div >
-                        <h3>Hey there, what's on your mind today?</h3>
+                <Header state={this.state} />
+                {this.state.completedTaskMode ?
+                    <div className="todo-list">
+                        {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
                         {todoItems}
-                    </div>
-                    {this.state.showForm ? this.showForm() : null}
-                    <div className="todo-button">
-                        <Button variant="outline-success" onClick={() => this.setState({ showForm: true })} disabled={this.state.showForm}>Add Task</Button>
-                    </div>
-                </div>
+                    </div> :
+                    <div className="todo-list">
+                        {this.showHeaderText("Hey there, what's on your mind today?")}
+                        {todoItems}
+                        {this.state.showForm ? this.showForm() : null}
+                        <div className="todo-button">
+                            <Button variant="outline-success" onClick={() => this.setState({ showForm: true })} disabled={this.state.showForm}>Add Task</Button>
+                        </div>
+                    </div>}
             </div>
         )
+    }
+
+    showHeaderText = (headerText) => {
+        return <h3> {headerText} </h3>
     }
 
     showForm = () => {
