@@ -1,12 +1,29 @@
 import React, { Component } from "react";
+import Header from './HeaderComponent';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
+import Button from 'react-bootstrap/Button';
 
 class LoginComponent extends Component {
 
     render() {
         return (
-            <form>
-                <h3>Sign In</h3>
-            </form >
+            <div >
+                <Header />
+                <Form className="todo-list">
+                    <FormGroup>
+                        <Label for="email">Email</Label>
+                        <Input type="email" name="email" id="email" placeholder="Please enter your email." />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password">Password</Label>
+                        <Input type="password" name="password" id="password" placeholder="Please enter your password." />
+                    </FormGroup>
+                    <div className="form-group row">
+                        <Button variant="outline-success">Submit</Button>
+                        <Button variant="outline-secondary">Continue as Guest</Button>
+                    </div>
+                </Form>
+            </div>
         );
     }
 }
