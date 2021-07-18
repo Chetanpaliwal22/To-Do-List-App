@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Header from './HeaderComponent';
+import Header from './Header';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import Button from 'react-bootstrap/Button';
-import './Login.css';
+import './css/Login.css';
 
 class Login extends Component {
 

@@ -3,8 +3,8 @@ import TodoItem from '../ToDoItem';
 import Button from 'react-bootstrap/Button';
 import { db } from '../firebase';
 import firebase from "firebase";
-import Header from './HeaderComponent';
-import AddTaskForm from "./AddTaskFormComponent";
+import Header from './Header';
+import AddTaskForm from "./AddTaskForm";
 
 class Main extends Component {
 

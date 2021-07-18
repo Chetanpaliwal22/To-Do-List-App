@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from './HeaderComponent';
+import Header from './Header';
 import Form from "react-bootstrap/Form";
 
 class Signup extends Component {
