@@ -46,6 +46,9 @@ class Main extends Component {
         this.updateContent()
     }
 
+    toggleTaskMode = (mode) => this.setState({ completedTaskMode: mode });
+    toggleShowForm = (mode) => this.setState({ showForm: mode });
+
     updateContent = async () => {
         let tododatas = await db.collection("ToDoList").get();
         let list = tododatas.docs.map(doc => {
@@ -58,9 +61,10 @@ class Main extends Component {
 
     addTodo = (newTodo) => {
         db.collection('ToDoList').doc(newTodo.id.toString()).set(newTodo).then(() => {
-            this.state.todos.push(newTodo)
+            const { todos } = this.state;
+            todos.push(newTodo);
             this.setState({
-                todos: this.state.todos,
+                todos,
                 showForm: false
             })
         }).catch((error) => {
@@ -81,12 +85,13 @@ class Main extends Component {
     }
 
     render() {
-        const todoItems = this.state.todos.filter((item) => { return item.completed === this.state.completedTaskMode }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
+        const { completedTaskMode, showForm, todos } = this.state;
+        const todoItems = todos.filter((item) => { return item.completed === completedTaskMode }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
 
         return (
             <div>
-                <Header state={this.state} />
-                {this.state.completedTaskMode ?
+                <Header toggleTaskMode={this.toggleTaskMode} />
+                {completedTaskMode ?
                     <div className="todo-list">
                         {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
                         {todoItems}
@@ -94,9 +99,9 @@ class Main extends Component {
                     <div className="todo-list">
                         {this.showHeaderText("Hey there, what's on your mind today?")}
                         {todoItems}
-                        {this.state.showForm ? this.showForm() : null}
+                        {showForm && this.showForm()}
                         <div className="todo-button">
-                            <Button variant="outline-success" onClick={() => this.setState({ showForm: true })} disabled={this.state.showForm}>Add Task</Button>
+                            <Button variant="outline-success" onClick={() => this.toggleShowForm(true)} disabled={showForm}>Add Task</Button>
                         </div>
                     </div>}
             </div>
@@ -109,7 +114,7 @@ class Main extends Component {
 
     showForm = () => {
         return (
-            <AddTaskForm addToDo={this.addTodo.bind(this)} state={this.state} />
+            <AddTaskForm addToDo={this.addTodo.bind(this)} />
         );
     }
 

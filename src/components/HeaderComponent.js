@@ -7,16 +7,18 @@ import {
 class Header extends React.Component {
 
     render() {
+        const { toggleTaskMode } = this.props;
+
         return (
 
             <div>
                 <Navbar dark expand="md header">
                     <div className="container">
-                        <NavbarBrand className="mr-auto" href="/">TO-Do List</NavbarBrand>
+                        <NavbarBrand className="mr-auto" onClick={() => toggleTaskMode(false)}>TO-Do List</NavbarBrand>
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
-                            <NavItem>
-                                    <NavLink className="nav-link" href='/' onClick={this.showCompletedTasks}><span className="fa fa-home fa-lg"></span>Completed Task</NavLink>
+                                <NavItem>
+                                    <NavLink className="nav-link" onClick={() => toggleTaskMode(true)}><span className="fa fa-home fa-lg"></span>Completed Task</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
