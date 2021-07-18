@@ -3,7 +3,7 @@ import Header from './HeaderComponent';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import Button from 'react-bootstrap/Button';
 
-class LoginComponent extends Component {
+class Login extends Component {
 
     render() {
         return (
@@ -28,4 +28,4 @@ class LoginComponent extends Component {
     }
 }
 
-export default LoginComponent;
+export default Login;
