@@ -18,7 +18,7 @@ class Header extends React.Component {
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/' onClick={() => toggleTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                                    <NavLink className="nav-link" to='/home' onClick={() => toggleTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink className="nav-link" to='/completed-task' onClick={() => toggleTaskMode(true)}><span className="fa fa-info fa-lg"></span>Completed-Tasks</NavLink>
