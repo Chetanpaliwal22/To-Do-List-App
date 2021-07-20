@@ -5,6 +5,7 @@ import { db } from '../firebase';
 import firebase from "firebase";
 import Header from './Header';
 import AddTaskForm from "./AddTaskForm";
+import './css/Main.css';
 
 class Main extends Component {
 
@@ -94,11 +95,15 @@ class Main extends Component {
                 {completedTaskMode ?
                     <div className="todo-list">
                         {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
-                        {todoItems}
+                        <div className="scroll-div">
+                            {todoItems}
+                        </div>
                     </div> :
                     <div className="todo-list">
                         {this.showHeaderText("Hey there, what's on your mind today?")}
-                        {todoItems}
+                        <div className="scroll-div">
+                            {todoItems}
+                        </div>
                         {showForm && this.showForm()}
                         <div className="todo-button">
                             <Button variant="outline-success" onClick={() => this.toggleShowForm(true)} disabled={showForm}>Add Task</Button>
