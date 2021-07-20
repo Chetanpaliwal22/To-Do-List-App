@@ -1,5 +1,9 @@
 body { 
-    background-color: #3279a8;
+    background-color: rgb(240, 239, 239);
+}
+
+.header{
+    background-color: orange;
 }
 
 .todo-list {
@@ -21,7 +25,7 @@ body {
         0 20px 0 -10px #eee,
             /* The third layer shadow */
         0 20px 1px -9px rgba(0,0,0,0.15);
-    padding: 30px;
+    padding: 60px;
 }
 
 .todo-item {
@@ -37,14 +41,7 @@ body {
     color: blue;
 }
 
-h1 {
-    text-align: center;
-    color: orange;
-}
 
-h3 {
-    text-align: center;
-}
 
 .todo-button {
     display: flex;
@@ -61,11 +58,11 @@ h3 {
 /**other codes**/
 }
 
-input[type=checkbox] {
+input[type=radio] {
     margin-right: 10px;
     font-size: 30px;
 }
 
-input[type=checkbox]:focus {
+input[type=radio]:focus {
     outline: 0;
 }

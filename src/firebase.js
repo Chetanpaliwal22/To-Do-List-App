@@ -1,16 +1,12 @@
 import firebase from "firebase";
 
 const firebaseApp = firebase.initializeApp({
-  // copy and paste your firebase credential here
-  apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  authDomain: "zzz.firebaseapp.com",
-  databaseURL: "https://zzz.firebaseio.com",
-  projectId: "to-do-list-app-9zzz",
-  storageBucket: "zzz.appspot.com",
-  messagingSenderId: "zzzz",
-  appId: "1:zzzzz:web:89bc34e406ddca03a4ee14"
+  apiKey: "AIzaSyB0SROk4amzArI8RzE-omf2dNsMyvFQ6YY",
+  projectId: "to-do-list-app-25482",
+  storageBucket: "to-do-list-app-25482.appspot.com",
+  messagingSenderId: "580095436319",
+  appId: "1:580095436319:web:79a40bdf16348bba38d72a"
 });
 
 const db = firebaseApp.firestore();
-
-export  { db };
+export { db };
