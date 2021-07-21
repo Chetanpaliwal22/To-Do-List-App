@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import TodoItem from '../ToDoItem';
+import TodoItem from '../TodoItem/ToDoItem';
 import Button from 'react-bootstrap/Button';
-import { db } from '../firebase';
+import { db } from '../../firebase';
 import firebase from "firebase";
-import Header from './Header';
-import AddTaskForm from "./AddTaskForm";
-import './css/Main.css';
+import Header from '../Header/Header';
+import TaskForm from "../TaskForm/TaskForm";
+import './Main.css';
 
 class Main extends Component {
 
@@ -119,7 +119,7 @@ class Main extends Component {
 
     showForm = () => {
         return (
-            <AddTaskForm addToDo={this.addTodo.bind(this)} />
+            <TaskForm addToDo={this.addTodo.bind(this)} />
         );
     }
 

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Header from './Header';
+import Header from '../Header/Header';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 import Button from 'react-bootstrap/Button';
-import './css/Login.css';
+import './Signin.css';
 
-class Login extends Component {
+class Sigin extends Component {
 
     render() {
         return (
@@ -29,4 +29,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Sigin;

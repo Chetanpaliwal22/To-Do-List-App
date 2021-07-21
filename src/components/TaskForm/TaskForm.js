@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-class AddTaskForm extends Component {
+class TaskForm extends Component {
 
     handleSubmit = (event) => {
         const { addToDo } = this.props;
@@ -36,4 +36,4 @@ class AddTaskForm extends Component {
     };
 }
 
-export default AddTaskForm;
+export default TaskForm;
