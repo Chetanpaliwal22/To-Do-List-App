@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom'
 
 class TaskForm extends Component {
 
@@ -28,9 +29,9 @@ class TaskForm extends Component {
                 <Form.Group controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" required label="Prove that, you are not a robot." />
                 </Form.Group>
-                <Button variant="primary" onClick={this.handleSubmit} type="button">
+                <Link onClick={this.handleSubmit}>
                     Add
-                </Button>
+                </Link>
             </Form>
         )
     };

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import TodoItem from '../TodoItem/ToDoItem';
-import Button from 'react-bootstrap/Button';
 import { db } from '../../firebase';
 import firebase from "firebase";
 import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
 import './Main.css';
+import { Link } from 'react-router-dom';
 
 class Main extends Component {
 
@@ -105,8 +105,8 @@ class Main extends Component {
                             {todoItems}
                         </div>
                         {showForm && this.showForm()}
-                        <div className="todo-button">
-                            <Button variant="outline-success" onClick={() => this.toggleShowForm(true)} disabled={showForm}>Add Task</Button>
+                        <div className="todo-link">
+                            <Link onClick={() => this.toggleShowForm(true)}>Add Task</Link>
                         </div>
                     </div>}
             </div>
