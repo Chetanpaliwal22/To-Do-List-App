@@ -7,11 +7,11 @@ function TodoItem(props) {
             <label>
             <input 
                 type="radio" 
-                checked={props.item.completed} 
-                onChange={() => props.handleChange(props.item.id)}
+                checked={props.item.status === 'completed'} 
+                onChange={() => props.handleChange(props.item.userId)}
             />
             </label>
-            <p>{props.item.text}</p>
+            <p>{props.item.task}</p>
         </div>
     )
 }

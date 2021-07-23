@@ -61,7 +61,7 @@ class Main extends Component {
     };
 
     addTodo = (newTodo) => {
-        db.collection('ToDoList').doc(newTodo.id.toString()).set(newTodo).then(() => {
+        db.collection('ToDoList').doc(newTodo.userId.toString()).set(newTodo).then(() => {
             const { todos } = this.state;
             todos.push(newTodo);
             this.setState({
@@ -76,7 +76,7 @@ class Main extends Component {
     handleChange = (id) => {
 
         db.collection("ToDoList").doc(id.toString()).update({
-            "completed": true,
+            "status": "completed",
         }).then(() => {
             let updatedTodos = this.state.todos.filter(function (todo) {
                 return todo.id !== id;
@@ -87,8 +87,8 @@ class Main extends Component {
 
     render() {
         const { completedTaskMode, showForm, todos } = this.state;
-        const todoItems = todos.filter((item) => { return item.completed === completedTaskMode }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
-
+        const completedtodos = todos.filter((item) => { return item.status === 'completed' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
+        const pendingtodos = todos.filter((item) => { return item.status === 'pending' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
         return (
             <div>
                 <Header toggleTaskMode={this.toggleTaskMode} />
@@ -96,13 +96,13 @@ class Main extends Component {
                     <div className="todo-list">
                         {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
                         <div className="scroll-div">
-                            {todoItems}
+                            {completedtodos}
                         </div>
                     </div> :
                     <div className="todo-list">
                         {this.showHeaderText("Hey there, what's on your mind today?")}
                         <div className="scroll-div">
-                            {todoItems}
+                            {pendingtodos}
                         </div>
                         {showForm && this.showForm()}
                         <div className="todo-link">

@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class TaskForm extends Component {
 
     handleSubmit = (event) => {
         const { addToDo } = this.props;
         const newTodo = {
-            id: Date.now(),
-            text: this.inputNode.value,
-            completed: false
+            userId: Date.now(),
+            userName: null,
+            task: this.inputNode.value,
+            status: 'pending',
+            dateCreated: Date.now()
         }
         addToDo(newTodo);
     }
