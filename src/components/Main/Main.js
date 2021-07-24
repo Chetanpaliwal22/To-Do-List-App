@@ -49,7 +49,7 @@ class Main extends Component {
         this.updateContent()
     }
 
-    toggleTaskMode = (mode) => this.setState({ completedTaskMode: mode });
+    toggleCompletedTaskMode = (mode) => this.setState({ completedTaskMode: mode });
     toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
     toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
 
@@ -69,7 +69,7 @@ class Main extends Component {
             todos.push(newTodo);
             this.setState({
                 todos,
-                showForm: false
+                showTaskForm: false
             })
         }).catch((error) => {
             console.error("Error writing document: ", error);
@@ -97,7 +97,7 @@ class Main extends Component {
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
         return (
             <div>
-                <Header toggleShowTaskFormMode={this.toggleShowTaskFormMode} toggleLoginPopup={this.toggleLoginPopup} />
+                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} />
                 <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} />
                 {completedTaskMode ?
                     <div className="todo-list">

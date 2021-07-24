@@ -1,13 +1,13 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {
     Navbar, NavbarBrand, Nav, Collapse, NavItem, Button
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import 'font-awesome/css/font-awesome.min.css';
 class Header extends React.Component {
 
     render() {
-        const { toggleShowTaskFormMode, toggleLoginPopup } = this.props;
+        const { toggleCompletedTaskMode, toggleLoginPopup } = this.props;
 
         return (
 
@@ -18,10 +18,10 @@ class Header extends React.Component {
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/home' onClick={() => toggleShowTaskFormMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                                    <NavLink className="nav-link" to='/home' onClick={() => toggleCompletedTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/completed-task' onClick={() => toggleShowTaskFormMode(true)}><span className="fa fa-info fa-lg"></span>Completed-Tasks</NavLink>
+                                    <NavLink className="nav-link" to='/completed-task' onClick={() => toggleCompletedTaskMode(true)}><span className="fa fa-list fa-lg"></span> Completed-Tasks</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
