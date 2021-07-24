@@ -75,12 +75,15 @@ class Main extends Component {
 
     handleChange = (id) => {
 
+        const { todos } = this.state;
         db.collection("ToDoList").doc(id.toString()).update({
             "status": "completed",
         }).then(() => {
-            let updatedTodos = this.state.todos.filter(function (todo) {
-                return todo.id !== id;
-            });
+            const updatedTodos = todos.map(todo =>
+                todo.userId === id
+                    ? { ...todo, status: 'completed' }
+                    : todo
+            );
             this.setState({ todos: updatedTodos });
         });
     }
