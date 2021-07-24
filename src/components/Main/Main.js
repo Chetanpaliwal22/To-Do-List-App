@@ -4,6 +4,7 @@ import { db } from '../../firebase';
 import firebase from "firebase";
 import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
+import Signin from '../Signin/Signin';
 import './Main.css';
 import { Link } from 'react-router-dom';
 
@@ -14,9 +15,10 @@ class Main extends Component {
 
         this.state = {
             todos: [],
-            showForm: false,
+            showTaskForm: false,
             userInfo: {},
-            completedTaskMode: false
+            completedTaskMode: false,
+            showLoginPopup: false
         }
     }
 
@@ -48,7 +50,8 @@ class Main extends Component {
     }
 
     toggleTaskMode = (mode) => this.setState({ completedTaskMode: mode });
-    toggleShowForm = (mode) => this.setState({ showForm: mode });
+    toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
+    toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
 
     updateContent = async () => {
         let tododatas = await db.collection("ToDoList").get();
@@ -89,12 +92,13 @@ class Main extends Component {
     }
 
     render() {
-        const { completedTaskMode, showForm, todos } = this.state;
+        const { completedTaskMode, showTaskForm, todos } = this.state;
         const completedtodos = todos.filter((item) => { return item.status === 'completed' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
         return (
             <div>
-                <Header toggleTaskMode={this.toggleTaskMode} />
+                <Header toggleShowTaskFormMode={this.toggleShowTaskFormMode} toggleLoginPopup={this.toggleLoginPopup} />
+                <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} />
                 {completedTaskMode ?
                     <div className="todo-list">
                         {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
@@ -107,9 +111,9 @@ class Main extends Component {
                         <div className="scroll-div">
                             {pendingtodos}
                         </div>
-                        {showForm && this.showForm()}
+                        {showTaskForm && this.showTaskForm()}
                         <div className="todo-link">
-                            <Link onClick={() => this.toggleShowForm(true)}>Add Task</Link>
+                            <Link onClick={() => this.toggleShowTaskFormMode(true)}>Add Task</Link>
                         </div>
                     </div>}
             </div>
@@ -120,7 +124,7 @@ class Main extends Component {
         return <h3> {headerText} </h3>
     }
 
-    showForm = () => {
+    showTaskForm = () => {
         return (
             <TaskForm addToDo={this.addTodo.bind(this)} />
         );

@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 class Header extends React.Component {
 
     render() {
-        const { toggleTaskMode } = this.props;
+        const { toggleShowTaskFormMode, toggleLoginPopup } = this.props;
 
         return (
 
@@ -18,15 +18,15 @@ class Header extends React.Component {
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/home' onClick={() => toggleTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                                    <NavLink className="nav-link" to='/home' onClick={() => toggleShowTaskFormMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/completed-task' onClick={() => toggleTaskMode(true)}><span className="fa fa-info fa-lg"></span>Completed-Tasks</NavLink>
+                                    <NavLink className="nav-link" to='/completed-task' onClick={() => toggleShowTaskFormMode(true)}><span className="fa fa-info fa-lg"></span>Completed-Tasks</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <Button outline href='/sign-in'>
+                                    <Button outline onClick={() => toggleLoginPopup(true)} >
                                         <span className="fa fa-sign-in fa-lg"></span> Login
                                     </Button>
                                 </NavItem>
