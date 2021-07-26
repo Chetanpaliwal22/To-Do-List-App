@@ -18,10 +18,10 @@ class Header extends React.Component {
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/home' onClick={() => toggleCompletedTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                                    <NavLink className="nav-link" to='/To-Do-List-App/home' onClick={() => toggleCompletedTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/completed-task' onClick={() => toggleCompletedTaskMode(true)}><span className="fa fa-list fa-lg"></span> Completed-Tasks</NavLink>
+                                    <NavLink className="nav-link" to='/To-Do-List-App/completed-task' onClick={() => toggleCompletedTaskMode(true)}><span className="fa fa-list fa-lg"></span> Completed-Tasks</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>

@@ -2,7 +2,7 @@
   "name": "to-do-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://Chetanpaliwal22.github.io/To-Do-List-App",
+  "homepage": "http://Chetanpaliwal22.github.io/To-Do-List-App/home",
   "dependencies": {
     "-": "0.0.1",
     "@testing-library/react": "^9.5.0",
@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
+    "react-toastify": "^7.0.4",
     "reactstrap": "^8.9.0"
   },
   "scripts": {

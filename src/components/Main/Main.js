@@ -18,7 +18,8 @@ class Main extends Component {
             showTaskForm: false,
             userInfo: {},
             completedTaskMode: false,
-            showLoginPopup: false
+            showLoginPopup: false,
+            releaseVersion: '1.0'
         }
     }
 
