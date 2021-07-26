@@ -15,7 +15,11 @@ class Main extends Component {
         this.state = {
             todos: [],
             showTaskForm: false,
-            userInfo: {},
+            userInfo: {
+                userName: '',
+                userEmail: '',
+                userId: ''
+            },
             completedTaskMode: false,
             showLoginPopup: false,
             releaseVersion: '1.0'
@@ -28,7 +32,7 @@ class Main extends Component {
 
     toggleCompletedTaskMode = (mode) => this.setState({ completedTaskMode: mode });
     toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
-    updateUser = (user) => this.setState({ user });
+    updateUserInfo = (userInfo) => this.setState({ userInfo });
     toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
 
     updateContent = async () => {
@@ -75,8 +79,8 @@ class Main extends Component {
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
         return (
             <div>
-                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} />
-                <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} updateUser={this.updateUser} />
+                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} {...this.state} />
+                <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
                 {completedTaskMode ?
                     <div className="todo-list">
                         {this.showHeaderText("Woo Hoo, You have completed following tasks!")}

@@ -25,11 +25,15 @@ class Header extends React.Component {
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <Button outline onClick={() => toggleLoginPopup(true)} >
-                                        <span className="fa fa-sign-in fa-lg"></span> Login
-                                    </Button>
-                                </NavItem>
+                                {this.props.userInfo.userName !== '' ?
+                                    <NavItem>
+                                        <NavLink className="nav-link disabled" to='/To-Do-List-App/completed-task'> {this.props.userInfo.userName} <span className="fa fa-angle-down"></span></NavLink>
+                                    </NavItem> :
+                                    <NavItem>
+                                        <Button outline onClick={() => toggleLoginPopup(true)} >
+                                            <span className="fa fa-sign-in fa-lg"></span> Login
+                                        </Button>
+                                    </NavItem>}
                             </Nav>
                         </Collapse>
                     </div>

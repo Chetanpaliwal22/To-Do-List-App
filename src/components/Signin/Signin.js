@@ -32,15 +32,20 @@ class Sigin extends React.Component {
     handleGoogleLogin() {
         var user = {};
         this.loginWithGoogle().then(function (result) {
-            var token = result.credential.accessToken;
             user = result.user;
         }).catch(function (error) {
             alert(error);
             localStorage.removeItem(this.firebaseAuthKey);
         });
-        this.props.toggleLoginPopup(false)
-        this.props.updateUser(user);
+
+        const userInfo = {
+            userName: user.displayName,
+            userEmail: user.email,
+            userId: user.email
+        };
+        this.props.updateUserInfo(userInfo);
         localStorage.setItem(this.firebaseAuthKey, "1");
+        this.props.toggleLoginPopup(false);
     }
 
     componentWillMount() {
