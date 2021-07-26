@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TodoItem from '../TodoItem/ToDoItem';
 import { db } from '../../firebase';
-import firebase from "firebase";
 import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
@@ -24,34 +23,12 @@ class Main extends Component {
     }
 
     async componentDidMount() {
-        //Signing in anonymous user
-        try {
-            await firebase.auth().signInAnonymously()
-        }
-        catch (error) {
-            //Handle Error here
-        }
-
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // User is signed in.
-                var isAnonymous = user.isAnonymous;
-                var uid = user.uid;
-                let userInfo = {
-                    isAnonymous,
-                    uid
-                }
-                this.setState({ userInfo })
-            } else {
-                // User is signed out.
-            }
-        });
-
-        this.updateContent()
+        this.updateContent();
     }
 
     toggleCompletedTaskMode = (mode) => this.setState({ completedTaskMode: mode });
     toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
+    updateUser = (user) => this.setState({ user });
     toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
 
     updateContent = async () => {
@@ -99,7 +76,7 @@ class Main extends Component {
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} />
-                <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} />
+                <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} updateUser={this.updateUser} />
                 {completedTaskMode ?
                     <div className="todo-list">
                         {this.showHeaderText("Woo Hoo, You have completed following tasks!")}

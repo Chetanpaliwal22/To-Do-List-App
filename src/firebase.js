@@ -2,6 +2,7 @@ import firebase from "firebase";
 
 const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyB0SROk4amzArI8RzE-omf2dNsMyvFQ6YY",
+  authDomain: "to-do-list-app-25482.firebaseapp.com",
   projectId: "to-do-list-app-25482",
   storageBucket: "to-do-list-app-25482.appspot.com",
   messagingSenderId: "580095436319",

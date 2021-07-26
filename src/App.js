@@ -11,6 +11,8 @@ class App extends React.Component {
       <BrowserRouter>
         <div className="App">
           <Switch>
+            <Route exact path='/To-Do-List-App' component={Main} />
+            <Route exact path='/' component={Main} />
             <Route exact path='/To-Do-List-App/home' component={Main} />
             <Route exact path='/To-Do-List-App/completed-task' component={Main} />
             <Redirect to="/To-Do-List-App/home" />
