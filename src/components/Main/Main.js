@@ -4,6 +4,7 @@ import { db } from '../../firebase';
 import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
+import firebase from "firebase";
 import './Main.css';
 import { Link } from 'react-router-dom';
 
@@ -28,6 +29,18 @@ class Main extends Component {
 
     async componentDidMount() {
         this.updateContent();
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                localStorage.removeItem("firebaseAuthInProgress");
+                localStorage.setItem(this.appTokenKey, user.uid);
+                const userInfo = {
+                    userName: user.displayName,
+                    userEmail: user.email,
+                    userId: user.email
+                };
+                this.updateUserInfo(userInfo);
+            }
+        });
     }
 
     toggleCompletedTaskMode = (mode) => this.setState({ completedTaskMode: mode });
