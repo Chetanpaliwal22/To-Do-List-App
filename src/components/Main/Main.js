@@ -48,6 +48,18 @@ class Main extends Component {
     updateUserInfo = (userInfo) => this.setState({ userInfo });
     toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
 
+    handleLogOut = () => {
+        firebase.auth().signOut().then(function () {
+            localStorage.removeItem("appToken");
+            const userInfo = {
+                userName: '',
+                userEmail: '',
+                userId: ''
+            };
+            this.updateUserInfo(userInfo);
+        }.bind(this));
+    };
+
     updateContent = async () => {
         let tododatas = await db.collection("ToDoList").get();
         let list = tododatas.docs.map(doc => {
@@ -92,7 +104,7 @@ class Main extends Component {
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
         return (
             <div>
-                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} {...this.state} />
+                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
                 {completedTaskMode ?
                     <div className="todo-list">

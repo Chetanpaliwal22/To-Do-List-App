@@ -10,8 +10,11 @@ import './Signin.css';
 
 class Sigin extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
+    }
 
-    firebaseAuthKey = "firebaseAuthInProgress";
     appTokenKey = "appToken";
 
     handleSign = (event) => {
@@ -19,9 +22,9 @@ class Sigin extends React.Component {
             firebase.auth().signInWithEmailAndPassword(
                 this.email.value, this.password.value
             ).then(user => {
-                console.log('Login successful');
+                //Login successful
             }).catch(err => {
-                console.log(err);
+                //Error
             })
         }
         else {
@@ -30,37 +33,15 @@ class Sigin extends React.Component {
     }
 
     handleGoogleLogin() {
-        var user = {};
         this.loginWithGoogle().then(function (result) {
-            user = result.user;
+            //Login successful
         }).catch(function (error) {
             alert(error);
-            localStorage.removeItem(this.firebaseAuthKey);
+            localStorage.removeItem("firebaseAuthInProgress");
         });
 
-        const userInfo = {
-            userName: user.displayName,
-            userEmail: user.email,
-            userId: user.email
-        };
-        this.props.updateUserInfo(userInfo);
-        localStorage.setItem(this.firebaseAuthKey, "1");
+        localStorage.setItem("firebaseAuthInProgress", "1");
         this.props.toggleLoginPopup(false);
-    }
-
-    componentWillMount() {
-
-        if (localStorage.getItem(this.appTokenKey)) {
-            return <Redirect to='/To-Do-List-App/home' />
-        }
-
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                localStorage.removeItem(this.firebaseAuthKey);
-                localStorage.setItem(this.appTokenKey, user.uid);
-                return <Redirect to='/To-Do-List-App/home' />
-            }
-        });
     }
 
     shareToast = (message) => toast(message);

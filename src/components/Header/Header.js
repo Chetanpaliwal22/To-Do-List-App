@@ -2,12 +2,14 @@ import React from 'react';
 import {
     Navbar, NavbarBrand, Nav, Collapse, NavItem, Button
 } from 'reactstrap';
+import { NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import 'font-awesome/css/font-awesome.min.css';
+
 class Header extends React.Component {
 
     render() {
-        const { toggleCompletedTaskMode, toggleLoginPopup } = this.props;
+        const { toggleCompletedTaskMode, toggleLoginPopup, handleLogOut } = this.props;
 
         return (
 
@@ -26,10 +28,10 @@ class Header extends React.Component {
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 {this.props.userInfo.userName !== '' ?
-                                    <NavItem>
-                                        <NavLink className="nav-link disabled" to='/To-Do-List-App/completed-task'> {this.props.userInfo.userName} <span className="fa fa-angle-down"></span></NavLink>
-                                    </NavItem> :
-                                    <NavItem>
+                                    <NavDropdown className="nav-link navBar" title={<span className="text-white">{this.props.userInfo.userName}</span>}>
+                                        <NavDropdown.Item onClick={() => handleLogOut()}>Logout</NavDropdown.Item>
+                                    </NavDropdown>
+                                    : <NavItem>
                                         <Button outline onClick={() => toggleLoginPopup(true)} >
                                             <span className="fa fa-sign-in fa-lg"></span> Login
                                         </Button>
