@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom';
 class TaskForm extends Component {
 
     handleSubmit = (event) => {
-        const { addToDo } = this.props;
+        const { addToDo, userInfo } = this.props;
         const newTodo = {
             userId: Date.now(),
-            userName: null,
+            userName: userInfo.userName,
+            userEmail: userInfo.userEmail,
             task: this.inputNode.value,
             status: 'pending',
             dateCreated: Date.now()

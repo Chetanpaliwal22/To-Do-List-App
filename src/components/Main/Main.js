@@ -63,7 +63,14 @@ class Main extends Component {
     updateContent = async () => {
         let tododatas = await db.collection("ToDoList").get();
         let list = tododatas.docs.map(doc => {
-            return doc.data()
+            let data = doc.data();
+            return {
+                userId: data.userId,
+                task: data.task,
+                userEmail: data.userEmail,
+                status: data.status,
+                userName: data.userName
+            }
         })
         this.setState({
             todos: list
@@ -99,9 +106,10 @@ class Main extends Component {
     }
 
     render() {
-        const { completedTaskMode, showTaskForm, todos } = this.state;
-        const completedtodos = todos.filter((item) => { return item.status === 'completed' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
-        const pendingtodos = todos.filter((item) => { return item.status === 'pending' }).map((item) => < TodoItem key={item.id} item={item} handleChange={this.handleChange} />)
+        const { completedTaskMode, showTaskForm, todos, userInfo } = this.state;
+        const completedtodos = todos.filter((item) => { return (item.status === 'completed' && item.userEmail === userInfo.userEmail) }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
+        const pendingtodos = todos.filter((item) => { return item.status === 'pending' && item.userEmail === userInfo.userEmail }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
+        const userName = userInfo.userName === '' ? 'there' : userInfo.userName;
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} handleLogOut={this.handleLogOut} {...this.state} />
@@ -114,7 +122,7 @@ class Main extends Component {
                         </div>
                     </div> :
                     <div className="todo-list">
-                        {this.showHeaderText("Hey there, what's on your mind today?")}
+                        {this.showHeaderText("Hey " + userName + ", what's on your mind today?")}
                         <div className="scroll-div">
                             {pendingtodos}
                         </div>
@@ -133,7 +141,7 @@ class Main extends Component {
 
     showTaskForm = () => {
         return (
-            <TaskForm addToDo={this.addTodo.bind(this)} />
+            <TaskForm addToDo={this.addTodo.bind(this)} {...this.state} />
         );
     }
 

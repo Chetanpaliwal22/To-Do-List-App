@@ -28,7 +28,7 @@ class Header extends React.Component {
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 {this.props.userInfo.userName !== '' ?
-                                    <NavDropdown className="nav-link navBar" title={<span className="text-white">{this.props.userInfo.userName}</span>}>
+                                    <NavDropdown title={<span className="text-white">{this.props.userInfo.userName}</span>}>
                                         <NavDropdown.Item onClick={() => handleLogOut()}>Logout</NavDropdown.Item>
                                     </NavDropdown>
                                     : <NavItem>
