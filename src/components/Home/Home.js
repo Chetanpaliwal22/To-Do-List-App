@@ -13,7 +13,7 @@ class Home extends Component {
                     <h3 className="h3"> “One of the secrets of getting more done is to make a TO-DO List every day, keep it visible.”</h3>
                     <h4> — Alan Lakein</h4>
                     <div className="linkgroup link">
-                        <Link>Login</Link>
+                        <Link>Signin</Link>
                         <Link>Explore as guest</Link>
                     </div>
                 </div>

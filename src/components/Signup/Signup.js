@@ -1,33 +1,38 @@
 import React, { Component } from "react";
-import Header from '../Header/Header'
-import Form from "react-bootstrap/Form";
+import { FormGroup, Label, Input } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 
 class Signup extends Component {
 
+
+
     render() {
+        const { showSignupPopup, toggleSignupPopup } = this.props;
+
         return (
-            <div >
-                <Header />
-                <Form className="todo-list">
-                    <Form.Group controlId="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            autoFocus
-                            type="email"
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password" />
-                    </Form.Group>
-                    <Form.Group controlId="confirmPassword">
-                        <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control
-                            type="password" />
-                    </Form.Group>
-                </Form>
-            </div>
+            <Modal show={showSignupPopup} onHide={() => toggleSignupPopup()}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Signup</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <FormGroup>
+                        <Label for="email" className="label">Email:</Label>
+                        <Input type="email" name="email" id="email" placeholder="Please enter your email." />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password" className="label">Password:</Label>
+                        <Input type="password" name="password" id="password" placeholder="Please enter your password." />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="password" className="label">Confirm Password:</Label>
+                        <Input type="password" name="password" id="password" placeholder="Please enter your password." />
+                    </FormGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-success">Sign-up</Button>
+                </Modal.Footer>
+            </Modal>
         );
     }
 }

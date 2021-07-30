@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Navbar, NavbarBrand, Nav, Collapse, NavItem, Button
+    Navbar, NavbarBrand, Nav, Collapse, NavItem
 } from 'reactstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
@@ -9,7 +9,7 @@ import 'font-awesome/css/font-awesome.min.css';
 class Header extends React.Component {
 
     render() {
-        const { toggleCompletedTaskMode, toggleLoginPopup, handleLogOut } = this.props;
+        const { toggleCompletedTaskMode, toggleSigninPopup, toggleSignupPopup, handleLogOut } = this.props;
 
         return (
 
@@ -34,10 +34,10 @@ class Header extends React.Component {
                                     </NavDropdown>
                                     : <Nav navbar>
                                         <NavItem>
-                                            <NavLink className="nav-link fa fa-sign-in fa-sm" to='' onClick={() => toggleLoginPopup(true)}> Sign-in</NavLink>
+                                            <NavLink className="nav-link fa fa-sign-in fa-sm" to='' onClick={() => toggleSigninPopup()}> Sign-in</NavLink>
                                         </NavItem>
                                         <NavItem>
-                                            <NavLink className="nav-link fa fa-sign-out fa-sm" to='' > Sign-out</NavLink>
+                                            <NavLink className="nav-link fa fa-list-alt  fa-sm" to='' onClick={() => toggleSignupPopup()}> Sign-up</NavLink>
                                         </NavItem>
                                     </Nav>}
                             </Nav>

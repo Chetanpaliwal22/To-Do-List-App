@@ -4,6 +4,7 @@ import { db } from '../../firebase';
 import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
+import Signup from "../Signup/Signup";
 import firebase from "firebase";
 import Loading from '../Loading/Loading'
 import './Main.css';
@@ -24,7 +25,8 @@ class Main extends Component {
             },
             isLoading: true,
             completedTaskMode: false,
-            showLoginPopup: false,
+            showSigninPopup: false,
+            showSignupPopup: false,
             releaseVersion: '1.0'
         }
     }
@@ -48,7 +50,8 @@ class Main extends Component {
     toggleCompletedTaskMode = (mode) => this.setState({ completedTaskMode: mode });
     toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
     updateUserInfo = (userInfo) => this.setState({ userInfo });
-    toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
+    toggleSigninPopup = () => this.setState({ showSigninPopup: !this.state.showSigninPopup });
+    toggleSignupPopup = () => this.setState({ showSignupPopup: !this.state.showSignupPopup });
     toggleLoadingMode = () => this.setState({ isLoading: !this.state.isLoading });
 
     handleLogOut = () => {
@@ -106,7 +109,7 @@ class Main extends Component {
                 todo.userId === id
                     ? { ...todo, status: 'completed' }
                     : todo
-            );
+            )
             this.setState({ todos: updatedTodos });
         });
     }
@@ -118,8 +121,9 @@ class Main extends Component {
         const userName = userInfo.userName === '' ? 'there' : userInfo.userName;
         return (
             <div>
-                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} handleLogOut={this.handleLogOut} {...this.state} />
-                <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
+                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} handleLogOut={this.handleLogOut} {...this.state} />
+                <Signin toggleSigninPopup={this.toggleSigninPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
+                <Signup toggleSignupPopup={this.toggleSignupPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
                 {this.state.isLoading ?
                     <Loading /> : <div>
                         {completedTaskMode ?

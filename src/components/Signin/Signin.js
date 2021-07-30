@@ -4,7 +4,6 @@ import { FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import firebase from "firebase";
-import { Redirect } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signin.css';
 
@@ -41,7 +40,7 @@ class Sigin extends React.Component {
         });
 
         localStorage.setItem("firebaseAuthInProgress", "1");
-        this.props.toggleLoginPopup(false);
+        this.props.toggleSigninPopup();
     }
 
     shareToast = (message) => toast(message);
@@ -53,13 +52,13 @@ class Sigin extends React.Component {
 
     render() {
 
-        const { showLoginPopup, toggleLoginPopup } = this.props;
+        const { showSigninPopup, toggleSigninPopup } = this.props;
         toast.configure();
 
         return (
-            <Modal show={showLoginPopup} onHide={() => toggleLoginPopup(false)}>
+            <Modal show={showSigninPopup} onHide={() => toggleSigninPopup()}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
+                    <Modal.Title>Signin</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <FormGroup className="formgroup">
@@ -75,7 +74,7 @@ class Sigin extends React.Component {
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-success" onClick={this.handleSign.bind(this)}>Submit</Button>
+                    <Button variant="outline-success" onClick={this.handleSign.bind(this)}>Sign-in</Button>
                     <Button variant="outline-primary" onClick={this.handleGoogleLogin.bind(this)} >Continue with Google</Button>
                 </Modal.Footer>
             </Modal>
