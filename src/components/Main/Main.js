@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
 import firebase from "firebase";
+import Loading from '../Loading/Loading'
 import './Main.css';
 import { Link } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ class Main extends Component {
                 userEmail: '',
                 userId: ''
             },
+            isLoading: true,
             completedTaskMode: false,
             showLoginPopup: false,
             releaseVersion: '1.0'
@@ -47,8 +49,10 @@ class Main extends Component {
     toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
     updateUserInfo = (userInfo) => this.setState({ userInfo });
     toggleLoginPopup = (mode) => this.setState({ showLoginPopup: mode });
+    toggleLoadingMode = () => this.setState({ isLoading: !this.state.isLoading });
 
     handleLogOut = () => {
+        this.toggleLoadingMode();
         firebase.auth().signOut().then(function () {
             localStorage.removeItem("appToken");
             const userInfo = {
@@ -57,6 +61,7 @@ class Main extends Component {
                 userId: ''
             };
             this.updateUserInfo(userInfo);
+            this.toggleLoadingMode();
         }.bind(this));
     };
 
@@ -73,7 +78,8 @@ class Main extends Component {
             }
         })
         this.setState({
-            todos: list
+            todos: list,
+            isLoading: false
         })
     };
 
@@ -114,23 +120,26 @@ class Main extends Component {
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleLoginPopup={this.toggleLoginPopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleLoginPopup={this.toggleLoginPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
-                {completedTaskMode ?
-                    <div className="todo-list">
-                        {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
-                        <div className="scroll-div">
-                            {completedtodos}
-                        </div>
-                    </div> :
-                    <div className="todo-list">
-                        {this.showHeaderText("Hey " + userName + ", what's on your mind today?")}
-                        <div className="scroll-div">
-                            {pendingtodos}
-                        </div>
-                        {showTaskForm && this.showTaskForm()}
-                        <div className="todo-link">
-                            <Link onClick={() => this.toggleShowTaskFormMode(true)}>Add Task</Link>
-                        </div>
-                    </div>}
+                {this.state.isLoading ?
+                    <Loading /> : <div>
+                        {completedTaskMode ?
+                            <div className="todo-list">
+                                {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
+                                <div className="scroll-div">
+                                    {completedtodos}
+                                </div>
+                            </div> :
+                            <div className="todo-list">
+                                {this.showHeaderText("Hey " + userName + ", what's on your mind today?")}
+                                <div className="scroll-div">
+                                    {pendingtodos}
+                                </div>
+                                {showTaskForm && this.showTaskForm()}
+                                <div className="todo-link">
+                                    <Link onClick={() => this.toggleShowTaskFormMode(true)}>Add Task</Link>
+                                </div>
+                            </div>} </div>
+                }
             </div>
         )
     }

@@ -20,22 +20,26 @@ class Header extends React.Component {
                         <Collapse navbar>
                             <Nav navbar className="headeritem">
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/To-Do-List-App/home' onClick={() => toggleCompletedTaskMode(false)}><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                                    <NavLink className="nav-link" to='/To-Do-List-App/home' onClick={() => toggleCompletedTaskMode(false)}><span className="fa fa-home fa-sm"></span> Home</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink className="nav-link" to='/To-Do-List-App/completed-task' onClick={() => toggleCompletedTaskMode(true)}><span className="fa fa-list fa-lg"></span> Completed-Tasks</NavLink>
+                                    <NavLink className="nav-link" to='/To-Do-List-App/completed-task' onClick={() => toggleCompletedTaskMode(true)}><span className="fa fa-list fa-sm"></span> Completed-Tasks</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav className="ml-auto" navbar>
                                 {this.props.userInfo.userName !== '' ?
                                     <NavDropdown title={<span className="text-white">{this.props.userInfo.userName}</span>}>
                                         <NavDropdown.Item onClick={() => handleLogOut()}>Logout</NavDropdown.Item>
+                                        <NavDropdown.Item>About To-Do List</NavDropdown.Item>
                                     </NavDropdown>
-                                    : <NavItem>
-                                        <Button outline onClick={() => toggleLoginPopup(true)} >
-                                            <span className="fa fa-sign-in fa-lg"></span> Login
-                                        </Button>
-                                    </NavItem>}
+                                    : <Nav navbar>
+                                        <NavItem>
+                                            <NavLink className="nav-link fa fa-sign-in fa-sm" to='' onClick={() => toggleLoginPopup(true)}> Sign-in</NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink className="nav-link fa fa-sign-out fa-sm" to='' > Sign-out</NavLink>
+                                        </NavItem>
+                                    </Nav>}
                             </Nav>
                         </Collapse>
                     </div>
