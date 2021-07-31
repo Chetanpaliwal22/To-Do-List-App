@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
 import Signup from "../Signup/Signup";
+import Leaderboard from "../Leaderboard/Leaderboard";
 import firebase from "firebase";
 import Loading from '../Loading/Loading'
 import './Main.css';
@@ -27,6 +28,7 @@ class Main extends Component {
             completedTaskMode: false,
             showSigninPopup: false,
             showSignupPopup: false,
+            showLeaderboardPopup: false,
             releaseVersion: '1.0'
         }
     }
@@ -52,6 +54,7 @@ class Main extends Component {
     updateUserInfo = (userInfo) => this.setState({ userInfo });
     toggleSigninPopup = () => this.setState({ showSigninPopup: !this.state.showSigninPopup });
     toggleSignupPopup = () => this.setState({ showSignupPopup: !this.state.showSignupPopup });
+    toggleLeaderboardPopup = () => this.setState({ showLeaderboardPopup: !this.state.showLeaderboardPopup });
     toggleLoadingMode = () => this.setState({ isLoading: !this.state.isLoading });
 
     handleLogOut = () => {
@@ -124,6 +127,7 @@ class Main extends Component {
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleSigninPopup={this.toggleSigninPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
                 <Signup toggleSignupPopup={this.toggleSignupPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
+                <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} {...this.state} />
                 {this.state.isLoading ?
                     <Loading /> : <div>
                         {completedTaskMode ?

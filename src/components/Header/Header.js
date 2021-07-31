@@ -31,6 +31,7 @@ class Header extends React.Component {
                                     <NavDropdown title={<span className="text-white">{this.props.userInfo.userName}</span>}>
                                         <NavDropdown.Item onClick={() => handleLogOut()}>Logout</NavDropdown.Item>
                                         <NavDropdown.Item>About To-Do List</NavDropdown.Item>
+                                        <NavDropdown.Item>Leaderboard</NavDropdown.Item>
                                     </NavDropdown>
                                     : <Nav navbar>
                                         <NavItem>
