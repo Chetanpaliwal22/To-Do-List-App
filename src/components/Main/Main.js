@@ -124,7 +124,7 @@ class Main extends Component {
         const userName = userInfo.userName === '' ? 'there' : userInfo.userName;
         return (
             <div>
-                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} handleLogOut={this.handleLogOut} {...this.state} />
+                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleSigninPopup={this.toggleSigninPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
                 <Signup toggleSignupPopup={this.toggleSignupPopup} {...this.state} updateUserInfo={this.updateUserInfo} />
                 <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} {...this.state} />

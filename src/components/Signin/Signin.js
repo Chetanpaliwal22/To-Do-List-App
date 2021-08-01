@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Modal } from 'react-bootstrap';
-import { FormGroup, Label, Input } from 'reactstrap';
+import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import firebase from "firebase";
+import { maxLength, minLength, validEmail } from '../../utils/Validation';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signin.css';
 
@@ -11,6 +12,12 @@ class Sigin extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            email: '',
+            password: '',
+            emailValid: true,
+            passwordValid: true
+        };
         this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
     }
 
@@ -19,7 +26,7 @@ class Sigin extends React.Component {
     handleSign = (event) => {
         if (this.props.releaseVersion !== '1.0') {
             firebase.auth().signInWithEmailAndPassword(
-                this.email.value, this.password.value
+                this.state.email.value, this.password.value
             ).then(user => {
                 //Login successful
             }).catch(err => {
@@ -50,6 +57,20 @@ class Sigin extends React.Component {
         return firebase.auth().signInWithPopup(googleProvider);
     }
 
+    onEmailchange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+            emailValid: validEmail(event.target.value)
+        });
+    }
+
+    onPasswordchange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+            passwordValid: minLength(event.target.value, 4) && maxLength(event.target.value, 10)
+        });
+    }
+
     render() {
 
         const { showSigninPopup, toggleSigninPopup } = this.props;
@@ -61,13 +82,15 @@ class Sigin extends React.Component {
                     <Modal.Title>Signin</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FormGroup className="formgroup">
+                    <FormGroup>
                         <Label for="email" className="label">Email:</Label>
-                        <Input type="email" name="email" id="email" placeholder="Please enter your email." />
+                        <Input invalid={!this.state.emailValid} type="email" name="email" id="email" placeholder="Enter your email here..." value={this.state.email} onChange={this.onEmailchange} />
+                        <FormFeedback>Not a valid Email address</FormFeedback>
                     </FormGroup>
-                    <FormGroup className="formgroup">
+                    <FormGroup>
                         <Label for="password" className="label">Password:</Label>
-                        <Input type="password" name="password" id="password" placeholder="Please enter your password." />
+                        <Input invalid={!this.state.passwordValid} type="password" name="password" id="password" placeholder="Enter your password here..." value={this.state.password} onChange={this.onPasswordchange} />
+                        <FormFeedback>This password is not valid.</FormFeedback>
                     </FormGroup>
                     <p className="link">
                         Having issues with sign in <Link onClick={() => this.shareToast('Only Google Authentication is available for this release!')}>Info?</Link>

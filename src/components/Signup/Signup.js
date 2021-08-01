@@ -3,6 +3,7 @@ import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Button, Modal } from 'react-bootstrap';
 import firebase from "firebase";
 import { toast } from 'react-toastify';
+import { maxLength, minLength, validEmail, isSamePassword } from '../../utils/Validation';
 
 class Signup extends Component {
 
@@ -22,40 +23,33 @@ class Signup extends Component {
         this.registerUser = this.registerUser.bind(this);
     }
 
-    required = (val) => val && val.length;
-    maxLength = (val, len) => !(val) || (val.length <= len);
-    minLength = (val, len) => val && (val.length >= len);
-    isNumber = (val) => !isNaN(Number(val));
-    validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
-    isSamePassword = (password, confirmPassword) => password === confirmPassword;
-
     shareToast = (message) => toast(message);
 
     onNamechange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            nameValid: this.minLength(event.target.value, 6) && this.maxLength(event.target.value, 12)
+            nameValid: minLength(event.target.value, 6) && maxLength(event.target.value, 12)
         });
     }
 
     onEmailchange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            emailValid: this.validEmail(event.target.value)
+            emailValid: validEmail(event.target.value)
         });
     }
 
     onPasswordchange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            passwordValid: this.minLength(event.target.value, 4) && this.maxLength(event.target.value, 10)
+            passwordValid: minLength(event.target.value, 4) && maxLength(event.target.value, 10)
         });
     }
 
     onConfirmPasswordchange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            confirmPasswordValid: this.isSamePassword(this.state.password, event.target.value)
+            confirmPasswordValid: isSamePassword(this.state.password, event.target.value)
         });
     }
 

@@ -9,7 +9,7 @@ import 'font-awesome/css/font-awesome.min.css';
 class Header extends React.Component {
 
     render() {
-        const { toggleCompletedTaskMode, toggleSigninPopup, toggleSignupPopup, handleLogOut } = this.props;
+        const { toggleCompletedTaskMode, toggleSigninPopup, toggleSignupPopup, toggleLeaderboardPopup, handleLogOut } = this.props;
 
         return (
 
@@ -29,9 +29,9 @@ class Header extends React.Component {
                             <Nav className="ml-auto" navbar>
                                 {this.props.userInfo.userName !== '' ?
                                     <NavDropdown title={<span className="text-white">{this.props.userInfo.userName}</span>}>
-                                        <NavDropdown.Item onClick={() => handleLogOut()}>Logout</NavDropdown.Item>
                                         <NavDropdown.Item>About To-Do List</NavDropdown.Item>
-                                        <NavDropdown.Item>Leaderboard</NavDropdown.Item>
+                                        <NavDropdown.Item onClick={() => toggleLeaderboardPopup()}>Leaderboard</NavDropdown.Item>
+                                        <NavDropdown.Item onClick={() => handleLogOut()}>Logout</NavDropdown.Item>
                                     </NavDropdown>
                                     : <Nav navbar>
                                         <NavItem>
