@@ -18,12 +18,12 @@ class Signup extends Component {
             nameValid: true,
             emailValid: true,
             passwordValid: true,
-            confirmPasswordValid: true,
-            isFormValid: false
+            confirmPasswordValid: true
         };
         this.onNamechange = this.onNamechange.bind(this);
         this.registerUser = this.registerUser.bind(this);
         this.authSuccess = this.authSuccess.bind(this);
+        this.validateForm = this.validateForm.bind(this);
     }
 
     shareToast = (message) => toast(message);
@@ -57,22 +57,16 @@ class Signup extends Component {
     }
 
     registerUser = () => {
-
+        this.validateForm();
         const isFormValid = this.state.nameValid && this.state.emailValid && this.state.passwordValid && this.state.confirmPasswordValid;
-
         if (!isFormValid) {
-            this.setState({
-                nameValid: minLength(this.state.name, 3) && maxLength(this.state.name, 12),
-                emailValid: validEmail(this.state.email),
-                passwordValid: minLength(this.state.password, 6) && maxLength(this.state.password, 10),
-                confirmPasswordValid: isSamePassword(this.state.password, this.state.confirmpassword)
-            });
             return;
         }
 
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => this.authSuccess())
             .catch(() => { this.shareToast('User registration failed!') });
+        this.props.toggleLoadingMode();
         this.props.toggleSignupPopup();
     }
 
@@ -85,8 +79,18 @@ class Signup extends Component {
 
         db.collection('User').doc(userInfo.userId.toString()).set(userInfo).then(() => {
             this.props.updateUserInfo(userInfo);
+            this.props.toggleLoadingMode();
         }).catch((error) => {
             console.error("Error writing document: ", error);
+        });
+    }
+
+    validateForm = () => {
+        this.setState({
+            nameValid: (minLength(this.state.name, 3) && maxLength(this.state.name, 12)),
+            emailValid: validEmail(this.state.email),
+            passwordValid: (minLength(this.state.password, 6) && maxLength(this.state.password, 10)),
+            confirmPasswordValid: isSamePassword(this.state.password, this.state.confirmpassword)
         });
     }
 

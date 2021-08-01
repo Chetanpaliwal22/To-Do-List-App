@@ -4,7 +4,7 @@ import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import firebase from "firebase";
-import { maxLength, minLength, validEmail } from '../../utils/Validation';
+import { required, validEmail } from '../../utils/Validation';
 import { db } from '../../firebase';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signin.css';
@@ -21,21 +21,40 @@ class Sigin extends React.Component {
         };
         this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
         this.authSuccess = this.authSuccess.bind(this);
-        this.handleSign = this.handleSign.bind(this);
+        this.handleSignin = this.handleSignin.bind(this);
     }
 
     appTokenKey = "appToken";
 
-    handleSign = () => {
+    handleSignin = () => {
+
+        this.validateForm();
+
+        const isFormValid = this.state.emailValid && this.state.passwordValid;
+        if (!isFormValid) {
+            return;
+        }
 
         firebase.auth().signInWithEmailAndPassword(
             this.state.email, this.state.password
         ).then(user => {
             this.authSuccess()
         }).catch(err => {
-            //Error
+            if (err.code === "auth/wrong-password") {
+                this.shareToast("Password is invalid, Try again!");
+                this.setState({
+                    passwordValid: false
+                });
+            }
         });
 
+    }
+
+    validateForm = () => {
+        this.setState({
+            emailValid: validEmail(this.state.email),
+            passwordValid: required(this.state.password)
+        });
     }
 
     authSuccess = async () => {
@@ -49,6 +68,7 @@ class Sigin extends React.Component {
                 userId: userData.userId
             }
             this.props.updateUserInfo(userInfo);
+            this.props.toggleSigninPopup();
         })
 
     }
@@ -82,7 +102,7 @@ class Sigin extends React.Component {
     onPasswordchange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            passwordValid: minLength(event.target.value, 6) && maxLength(event.target.value, 10)
+            passwordValid: required(event.target.value)
         });
     }
 
@@ -105,15 +125,15 @@ class Sigin extends React.Component {
                     <FormGroup>
                         <Label for="password" className="label">Password:</Label>
                         <Input invalid={!this.state.passwordValid} type="password" name="password" id="password" placeholder="Enter your password here..." value={this.state.password} onChange={this.onPasswordchange} />
-                        <FormFeedback>This password is not valid.</FormFeedback>
+                        <FormFeedback>This password is not correct.</FormFeedback>
                     </FormGroup>
                     <p className="link">
                         Having issues with sign in <Link onClick={() => this.shareToast('Only Google Authentication is available for this release!')}>Info?</Link>
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-success" onClick={this.handleSign.bind(this)}>Sign-in</Button>
-                    <Button variant="outline-primary" onClick={this.handleGoogleLogin.bind(this)} >Continue with Google</Button>
+                    <Button variant="outline-success" onClick={this.handleSignin.bind(this)}>Sign-in</Button>
+                    <Button variant="outline-primary" onClick={() => this.handleGoogleLogin} >Continue with Google</Button>
                 </Modal.Footer>
             </Modal>
         );
