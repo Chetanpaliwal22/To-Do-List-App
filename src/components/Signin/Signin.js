@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import firebase from "firebase";
 import { maxLength, minLength, validEmail } from '../../utils/Validation';
+import { db } from '../../firebase';
 import 'react-toastify/dist/ReactToastify.css';
 import './Signin.css';
 
@@ -19,23 +20,37 @@ class Sigin extends React.Component {
             passwordValid: true
         };
         this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
+        this.authSuccess = this.authSuccess.bind(this);
+        this.handleSign = this.handleSign.bind(this);
     }
 
     appTokenKey = "appToken";
 
-    handleSign = (event) => {
-        if (this.props.releaseVersion !== '1.0') {
-            firebase.auth().signInWithEmailAndPassword(
-                this.state.email.value, this.password.value
-            ).then(user => {
-                //Login successful
-            }).catch(err => {
-                //Error
-            })
-        }
-        else {
-            this.shareToast("Sorry! Login with Email/Pwd is not available for this release.");
-        }
+    handleSign = () => {
+
+        firebase.auth().signInWithEmailAndPassword(
+            this.state.email, this.state.password
+        ).then(user => {
+            this.authSuccess()
+        }).catch(err => {
+            //Error
+        });
+
+    }
+
+    authSuccess = async () => {
+
+        let user = await db.collection('User').where("userEmail", "==", this.state.email).get();
+        user.docs.map(doc => {
+            let userData = doc.data();
+            const userInfo = {
+                userName: userData.userName,
+                userEmail: userData.email,
+                userId: userData.userId
+            }
+            this.props.updateUserInfo(userInfo);
+        })
+
     }
 
     handleGoogleLogin() {
@@ -67,7 +82,7 @@ class Sigin extends React.Component {
     onPasswordchange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            passwordValid: minLength(event.target.value, 4) && maxLength(event.target.value, 10)
+            passwordValid: minLength(event.target.value, 6) && maxLength(event.target.value, 10)
         });
     }
 

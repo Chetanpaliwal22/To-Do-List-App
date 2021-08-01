@@ -4,6 +4,7 @@ import { Button, Modal } from 'react-bootstrap';
 import firebase from "firebase";
 import { toast } from 'react-toastify';
 import { maxLength, minLength, validEmail, isSamePassword } from '../../utils/Validation';
+import { db } from '../../firebase';
 
 class Signup extends Component {
 
@@ -13,6 +14,7 @@ class Signup extends Component {
             name: '',
             email: '',
             password: '',
+            confirmpassword: '',
             nameValid: true,
             emailValid: true,
             passwordValid: true,
@@ -21,6 +23,7 @@ class Signup extends Component {
         };
         this.onNamechange = this.onNamechange.bind(this);
         this.registerUser = this.registerUser.bind(this);
+        this.authSuccess = this.authSuccess.bind(this);
     }
 
     shareToast = (message) => toast(message);
@@ -28,7 +31,7 @@ class Signup extends Component {
     onNamechange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            nameValid: minLength(event.target.value, 6) && maxLength(event.target.value, 12)
+            nameValid: minLength(event.target.value, 3) && maxLength(event.target.value, 12)
         });
     }
 
@@ -42,7 +45,7 @@ class Signup extends Component {
     onPasswordchange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
-            passwordValid: minLength(event.target.value, 4) && maxLength(event.target.value, 10)
+            passwordValid: minLength(event.target.value, 6) && maxLength(event.target.value, 10)
         });
     }
 
@@ -54,17 +57,37 @@ class Signup extends Component {
     }
 
     registerUser = () => {
-        const isFormValid = this.state.validName && this.state.validEmail && this.state.passwordValid && this.state.confirmPasswordValid;
+
+        const isFormValid = this.state.nameValid && this.state.emailValid && this.state.passwordValid && this.state.confirmPasswordValid;
 
         if (!isFormValid) {
-            this.shareToast('Please enter all the required field.');
+            this.setState({
+                nameValid: minLength(this.state.name, 3) && maxLength(this.state.name, 12),
+                emailValid: validEmail(this.state.email),
+                passwordValid: minLength(this.state.password, 6) && maxLength(this.state.password, 10),
+                confirmPasswordValid: isSamePassword(this.state.password, this.state.confirmpassword)
+            });
+            return;
         }
 
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => this.toggleSignupPopup())
+            .then(() => this.authSuccess())
             .catch(() => { this.shareToast('User registration failed!') });
+        this.props.toggleSignupPopup();
+    }
 
-        console.log('end user creation');
+    authSuccess = () => {
+        const userInfo = {
+            userName: this.state.name,
+            userEmail: this.state.email,
+            userId: Date.now()
+        }
+
+        db.collection('User').doc(userInfo.userId.toString()).set(userInfo).then(() => {
+            this.props.updateUserInfo(userInfo);
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+        });
     }
 
     render() {
@@ -80,7 +103,7 @@ class Signup extends Component {
                     <FormGroup>
                         <Label for="name">Name:</Label>
                         <Input invalid={!this.state.nameValid} type="name" name="name" id="name" placeholder="Enter your name here..." value={this.state.name} onChange={this.onNamechange} />
-                        <FormFeedback>Name of at least 6 & at most 12 character is required</FormFeedback>
+                        <FormFeedback>Name of at least 3 & at most 12 character is required</FormFeedback>
                     </FormGroup>
                     <FormGroup>
                         <Label for="email" className="label">Email:</Label>
