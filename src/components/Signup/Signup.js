@@ -74,7 +74,10 @@ class Signup extends Component {
         const userInfo = {
             userName: this.state.name,
             userEmail: this.state.email,
-            userId: Date.now()
+            userId: Date.now(),
+            userScore: 0,
+            creationDate: Date.now(),
+            lastActiveDate: Date.now()
         }
 
         db.collection('User').doc(userInfo.userId.toString()).set(userInfo).then(() => {
