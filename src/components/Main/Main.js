@@ -25,6 +25,7 @@ class Main extends Component {
                 userId: ''
             },
             isLoading: true,
+            userScore: -1,
             completedTaskMode: false,
             showSigninPopup: false,
             showSignupPopup: false,
@@ -82,7 +83,7 @@ class Main extends Component {
                 status: data.status,
                 userName: data.userName
             }
-        })
+        });
         this.setState({
             todos: list,
             isLoading: false
@@ -125,9 +126,9 @@ class Main extends Component {
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
-                <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo} />
+                <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} />
                 <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo} />
-                <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} {...this.state} />
+                <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} data={completedtodos} {...this.state} />
                 {this.state.isLoading ?
                     <Loading /> : <div>
                         {completedTaskMode ?

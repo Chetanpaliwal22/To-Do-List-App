@@ -38,8 +38,9 @@ class Sigin extends React.Component {
         firebase.auth().signInWithEmailAndPassword(
             this.state.email, this.state.password
         ).then(user => {
-            this.authSuccess()
+            this.authSuccess();
         }).catch(err => {
+            localStorage.removeItem("firebaseAuthInProgress");
             if (err.code === "auth/wrong-password") {
                 this.shareToast("Password is invalid, Try again!");
                 this.setState({
@@ -47,6 +48,7 @@ class Sigin extends React.Component {
                 });
             }
         });
+        localStorage.setItem("firebaseAuthInProgress", "1");
 
     }
 
@@ -67,7 +69,10 @@ class Sigin extends React.Component {
                 userEmail: userData.email,
                 userId: userData.userId
             }
+            localStorage.removeItem("firebaseAuthInProgress");
+            localStorage.setItem(this.appTokenKey, userData.userId);
             this.props.updateUserInfo(userInfo);
+            this.props.updateContent();
             this.props.toggleSigninPopup();
         })
 
@@ -133,7 +138,7 @@ class Sigin extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="outline-success" onClick={this.handleSignin.bind(this)}>Sign-in</Button>
-                    <Button variant="outline-primary" onClick={() => this.handleGoogleLogin} >Continue with Google</Button>
+                    <Button variant="outline-primary" onClick={this.handleGoogleLogin.bind(this)} >Continue with Google</Button>
                 </Modal.Footer>
             </Modal>
         );
