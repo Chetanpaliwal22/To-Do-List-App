@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap';
 class Leaderboard extends Component {
 
     render() {
-        const { showLeaderboardPopup, toggleLeaderboardPopup, userScore } = this.props;
+        const { showLeaderboardPopup, toggleLeaderboardPopup } = this.props;
 
         return (
             <Modal show={showLeaderboardPopup} onHide={() => toggleLeaderboardPopup()} >
