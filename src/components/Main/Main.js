@@ -127,7 +127,7 @@ class Main extends Component {
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} />
-                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo} />
+                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} updateUserInfo={this.updateUserInfo} {...this.state} />
                 <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} data={completedtodos} {...this.state} />
                 {this.state.isLoading ?
                     <Loading /> : <div>
