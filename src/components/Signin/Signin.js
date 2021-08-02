@@ -59,22 +59,24 @@ class Sigin extends React.Component {
         });
     }
 
-    authSuccess = async () => {
+    authSuccess = () => {
 
-        let user = await db.collection('User').where("userEmail", "==", this.state.email).get();
-        user.docs.map(doc => {
-            let userData = doc.data();
-            const userInfo = {
-                userName: userData.userName,
-                userEmail: userData.email,
-                userId: userData.userId
-            }
-            localStorage.removeItem("firebaseAuthInProgress");
-            localStorage.setItem(this.appTokenKey, userData.userId);
+        db.collection('User').where("userEmail", "==", this.state.email).get().then((user) => {
+            const userInfo = user.docs.map(doc => {
+                let userData = doc.data();
+                return {
+                    userName: userData.userName,
+                    userEmail: userData.email,
+                    userId: userData.userId
+                }
+            });
+
             this.props.updateUserInfo(userInfo);
+            localStorage.removeItem("firebaseAuthInProgress");
+            localStorage.setItem(this.appTokenKey, userInfo.userId);
             this.props.updateContent();
             this.props.toggleSigninPopup();
-        })
+        });
 
     }
 
