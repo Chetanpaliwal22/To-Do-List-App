@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/To-Do-List-App/static/css/main.e246e90e.chunk.css",
-    "main.js": "/To-Do-List-App/static/js/main.e4026d56.chunk.js",
-    "main.js.map": "/To-Do-List-App/static/js/main.e4026d56.chunk.js.map",
+    "main.js": "/To-Do-List-App/static/js/main.730df09d.chunk.js",
+    "main.js.map": "/To-Do-List-App/static/js/main.730df09d.chunk.js.map",
     "runtime-main.js": "/To-Do-List-App/static/js/runtime-main.00ae13ca.js",
     "runtime-main.js.map": "/To-Do-List-App/static/js/runtime-main.00ae13ca.js.map",
     "static/css/2.ffc9bb26.chunk.css": "/To-Do-List-App/static/css/2.ffc9bb26.chunk.css",
-    "static/js/2.a1884249.chunk.js": "/To-Do-List-App/static/js/2.a1884249.chunk.js",
-    "static/js/2.a1884249.chunk.js.map": "/To-Do-List-App/static/js/2.a1884249.chunk.js.map",
+    "static/js/2.0c189cca.chunk.js": "/To-Do-List-App/static/js/2.0c189cca.chunk.js",
+    "static/js/2.0c189cca.chunk.js.map": "/To-Do-List-App/static/js/2.0c189cca.chunk.js.map",
     "index.html": "/To-Do-List-App/index.html",
     "static/css/2.ffc9bb26.chunk.css.map": "/To-Do-List-App/static/css/2.ffc9bb26.chunk.css.map",
     "static/css/main.e246e90e.chunk.css.map": "/To-Do-List-App/static/css/main.e246e90e.chunk.css.map",
-    "static/js/2.a1884249.chunk.js.LICENSE.txt": "/To-Do-List-App/static/js/2.a1884249.chunk.js.LICENSE.txt",
+    "static/js/2.0c189cca.chunk.js.LICENSE.txt": "/To-Do-List-App/static/js/2.0c189cca.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/To-Do-List-App/static/media/fontawesome-webfont.f691f37e.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.00ae13ca.js",
     "static/css/2.ffc9bb26.chunk.css",
-    "static/js/2.a1884249.chunk.js",
+    "static/js/2.0c189cca.chunk.js",
     "static/css/main.e246e90e.chunk.css",
-    "static/js/main.e4026d56.chunk.js"
+    "static/js/main.730df09d.chunk.js"
   ]
 }
