@@ -66,12 +66,11 @@ class Sigin extends React.Component {
                 let userData = doc.data();
                 return {
                     userName: userData.userName,
-                    userEmail: userData.email,
+                    userEmail: userData.userEmail,
                     userId: userData.userId
                 }
             });
-
-            this.props.updateUserInfo(userInfo);
+            this.props.updateUserInfo(userInfo[0]);
             localStorage.removeItem("firebaseAuthInProgress");
             localStorage.setItem(this.appTokenKey, userInfo.userId);
             this.props.updateContent();
