@@ -7,7 +7,8 @@ import Signin from '../Signin/Signin';
 import Signup from "../Signup/Signup";
 import Leaderboard from "../Leaderboard/Leaderboard";
 import firebase from "firebase";
-import Loading from '../Loading/Loading'
+import Loading from '../Loading/Loading';
+import { toast } from 'react-toastify';
 import './Main.css';
 import { Link } from 'react-router-dom';
 
@@ -57,6 +58,8 @@ class Main extends Component {
     toggleSignupPopup = () => this.setState({ showSignupPopup: !this.state.showSignupPopup });
     toggleLeaderboardPopup = () => this.setState({ showLeaderboardPopup: !this.state.showLeaderboardPopup });
     toggleLoadingMode = () => this.setState({ isLoading: !this.state.isLoading });
+
+    shareToast = (message) => toast(message);
 
     handleLogOut = () => {
         this.toggleLoadingMode();
@@ -115,6 +118,8 @@ class Main extends Component {
                     : todo
             )
             this.setState({ todos: updatedTodos });
+            const message = this.state.userInfo.userName && this.state.userInfo.userName ? "Congratulations! you have earned 3 To-Do List points." : "Uh oh! you missed a chance to earn To-Do List points. Sign-in now to save points";
+            this.shareToast(message)
         });
     }
 
@@ -123,6 +128,7 @@ class Main extends Component {
         const completedtodos = todos.filter((item) => { return (item.status === 'completed' && item.userEmail === userInfo.userEmail) }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' && item.userEmail === userInfo.userEmail }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
         const userName = userInfo.userName && userInfo.userName !== '' ? userInfo.userName : 'there';
+        toast.configure();
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
