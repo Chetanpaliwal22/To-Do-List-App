@@ -122,7 +122,7 @@ class Main extends Component {
         const { completedTaskMode, showTaskForm, todos, userInfo } = this.state;
         const completedtodos = todos.filter((item) => { return (item.status === 'completed' && item.userEmail === userInfo.userEmail) }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' && item.userEmail === userInfo.userEmail }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
-        const userName = userInfo.userName === '' ? 'there' : userInfo.userName;
+        const userName = userInfo.userName && userInfo.userName !== '' ? userInfo.userName : 'there';
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
