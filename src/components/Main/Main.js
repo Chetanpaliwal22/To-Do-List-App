@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TodoItem from '../TodoItem/ToDoItem';
 import { db } from '../../firebase';
 import Header from '../Header/Header';
+import Home from '../Home/Home';
 import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
 import Signup from "../Signup/Signup";
@@ -18,6 +19,7 @@ class Main extends Component {
         super()
 
         this.state = {
+            isUserLoggedIn: false,
             todos: [],
             showTaskForm: false,
             userInfo: {
@@ -37,6 +39,7 @@ class Main extends Component {
 
     async componentDidMount() {
         this.updateContent();
+
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 localStorage.removeItem("firebaseAuthInProgress");
@@ -47,6 +50,7 @@ class Main extends Component {
                     userId: user.email
                 };
                 this.updateUserInfo(userInfo);
+                this.updateUserLoggedIn(true);
             }
         });
     }
@@ -54,6 +58,7 @@ class Main extends Component {
     toggleCompletedTaskMode = (mode) => this.setState({ completedTaskMode: mode });
     toggleShowTaskFormMode = (mode) => this.setState({ showTaskForm: mode });
     updateUserInfo = (userInfo) => this.setState({ userInfo });
+    updateUserLoggedIn = (isUserLoggedIn) => this.setState({ isUserLoggedIn: isUserLoggedIn });
     toggleSigninPopup = () => this.setState({ showSigninPopup: !this.state.showSigninPopup });
     toggleSignupPopup = () => this.setState({ showSignupPopup: !this.state.showSignupPopup });
     toggleLeaderboardPopup = () => this.setState({ showLeaderboardPopup: !this.state.showLeaderboardPopup });
@@ -71,6 +76,7 @@ class Main extends Component {
                 userId: ''
             };
             this.updateUserInfo(userInfo);
+            this.updateUserLoggedIn(false);
             this.toggleLoadingMode();
         }.bind(this));
     };
@@ -124,7 +130,7 @@ class Main extends Component {
     }
 
     render() {
-        const { completedTaskMode, showTaskForm, todos, userInfo } = this.state;
+        const { completedTaskMode, showTaskForm, todos, userInfo, isLoading, isUserLoggedIn } = this.state;
         const completedtodos = todos.filter((item) => { return (item.status === 'completed' && item.userEmail === userInfo.userEmail) }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
         const pendingtodos = todos.filter((item) => { return item.status === 'pending' && item.userEmail === userInfo.userEmail }).map((item) => < TodoItem key={item.userId} item={item} handleChange={this.handleChange} />);
         const userName = userInfo.userName && userInfo.userName !== '' ? userInfo.userName : 'there';
@@ -132,28 +138,30 @@ class Main extends Component {
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
-                <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} />
-                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} updateUserInfo={this.updateUserInfo} {...this.state} />
+                <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} updateUserLoggedIn={this.updateUserLoggedIn} />
+                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} />
                 <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} data={completedtodos} {...this.state} />
-                {this.state.isLoading ?
-                    <Loading /> : <div>
-                        {completedTaskMode ?
-                            <div className="todo-list">
-                                {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
-                                <div className="scroll-div">
-                                    {completedtodos}
-                                </div>
-                            </div> :
-                            <div className="todo-list">
-                                {this.showHeaderText("Hey " + userName + ", what's on your mind today?")}
-                                <div className="scroll-div">
-                                    {pendingtodos}
-                                </div>
-                                {showTaskForm && this.showTaskForm()}
-                                <div className="todo-link">
-                                    <Link onClick={() => this.toggleShowTaskFormMode(true)}>Add Task</Link>
-                                </div>
-                            </div>} </div>
+                {isUserLoggedIn ? <>
+                    {isLoading ?
+                        <Loading /> : <div>
+                            {completedTaskMode ?
+                                <div className="todo-list">
+                                    {this.showHeaderText("Woo Hoo, You have completed following tasks!")}
+                                    <div className="scroll-div">
+                                        {completedtodos}
+                                    </div>
+                                </div> :
+                                <div className="todo-list">
+                                    {this.showHeaderText("Hey " + userName + ", what's on your mind today?")}
+                                    <div className="scroll-div">
+                                        {pendingtodos}
+                                    </div>
+                                    {showTaskForm && this.showTaskForm()}
+                                    <div className="todo-link">
+                                        <Link onClick={() => this.toggleShowTaskFormMode(true)}>Add Task</Link>
+                                    </div>
+                                </div>} </div>}
+                </> : <Home {...this.state} toggleSigninPopup={this.toggleSigninPopup} />
                 }
             </div>
         )

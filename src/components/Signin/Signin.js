@@ -71,6 +71,7 @@ class Sigin extends React.Component {
                 }
             });
             this.props.updateUserInfo(userInfo[0]);
+            this.props.updateUserLoggedIn(true);
             localStorage.removeItem("firebaseAuthInProgress");
             localStorage.setItem(this.appTokenKey, userInfo.userId);
             this.props.updateContent();
