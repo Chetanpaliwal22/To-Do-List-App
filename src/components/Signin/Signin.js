@@ -135,7 +135,7 @@ class Sigin extends React.Component {
                         <FormFeedback>This password is not correct.</FormFeedback>
                     </FormGroup>
                     <p className="link">
-                        Having issues with sign in <Link onClick={() => this.shareToast('You can create a new user using the sign-up form.')}>Info?</Link>
+                        Having issues with sign in <Link to={"/"} onClick={() => this.shareToast('You can create a new user using the sign-up form.')}>Info?</Link>
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
