@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Button, Modal } from 'react-bootstrap';
 import firebase from "firebase";
-import { toast } from 'react-toastify';
 import { maxLength, minLength, validEmail, isSamePassword } from '../../utils/Validation';
 import { db } from '../../firebase';
 
@@ -25,8 +24,6 @@ class Signup extends Component {
         this.authSuccess = this.authSuccess.bind(this);
         this.validateForm = this.validateForm.bind(this);
     }
-
-    shareToast = (message) => toast(message);
 
     onNamechange = (event) => {
         this.setState({
@@ -65,7 +62,7 @@ class Signup extends Component {
 
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => this.authSuccess())
-            .catch(() => { this.shareToast('User registration failed!') });
+            .catch(() => { this.props.shareErrorToast('User registration failed!') });
         this.props.toggleLoadingMode();
         this.props.toggleSignupPopup();
     }
@@ -99,7 +96,6 @@ class Signup extends Component {
 
     render() {
         const { showSignupPopup, toggleSignupPopup } = this.props;
-        toast.configure();
 
         return (
             <Modal show={showSignupPopup} onHide={() => toggleSignupPopup()}>

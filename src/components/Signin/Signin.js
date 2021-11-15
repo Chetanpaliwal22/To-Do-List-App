@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Modal } from 'react-bootstrap';
 import { FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import firebase from "firebase";
 import { required, validEmail } from '../../utils/Validation';
 import { db } from '../../firebase';
@@ -42,7 +41,7 @@ class Sigin extends React.Component {
         }).catch(err => {
             localStorage.removeItem("firebaseAuthInProgress");
             if (err.code === "auth/wrong-password") {
-                this.shareToast("Password is invalid, Try again!");
+                this.props.shareErrorToast("Password is invalid, Try again!");
                 this.setState({
                     passwordValid: false
                 });
@@ -92,8 +91,6 @@ class Sigin extends React.Component {
         this.props.toggleSigninPopup();
     }
 
-    shareToast = (message) => toast(message);
-
     loginWithGoogle() {
         const googleProvider = new firebase.auth.GoogleAuthProvider();
         return firebase.auth().signInWithPopup(googleProvider);
@@ -116,7 +113,6 @@ class Sigin extends React.Component {
     render() {
 
         const { showSigninPopup, toggleSigninPopup } = this.props;
-        toast.configure();
 
         return (
             <Modal show={showSigninPopup} onHide={() => toggleSigninPopup()}>
@@ -135,7 +131,7 @@ class Sigin extends React.Component {
                         <FormFeedback>This password is not correct.</FormFeedback>
                     </FormGroup>
                     <p className="link">
-                        Having issues with sign in <Link to={"/"} onClick={() => this.shareToast('You can create a new user using the sign-up form.')}>Info?</Link>
+                        Having issues with sign in <Link to={"/"} onClick={() => this.props.shareInfoToast('You can create a new user using the sign-up form.')}>Info?</Link>
                     </p>
                 </Modal.Body>
                 <Modal.Footer>

@@ -53,9 +53,6 @@ class Main extends Component {
                     userInfo.userName = userInfo.userEmail?.split("@")[0];
                 };
                 this.updateUserInfo(userInfo);
-
-                console.log('here');
-                console.log(userInfo);
                 this.updateUserLoggedIn(true);
             }
         });
@@ -70,7 +67,19 @@ class Main extends Component {
     toggleLeaderboardPopup = () => this.setState({ showLeaderboardPopup: !this.state.showLeaderboardPopup });
     toggleLoadingMode = () => this.setState({ isLoading: !this.state.isLoading });
 
-    shareToast = (message) => toast(message);
+    toastConfig = {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+    };
+
+    shareSuccessToast = (message) => toast.success(message, this.toastConfig);
+    shareErrorToast = (message) => toast.error(message, this.toastConfig);
+    shareInfoToast = (message) => toast.info(message, this.toastConfig);
 
     handleLogOut = () => {
         this.toggleLoadingMode();
@@ -131,7 +140,7 @@ class Main extends Component {
             )
             this.setState({ todos: updatedTodos });
             const message = this.state.userInfo.userName && this.state.userInfo.userName ? "Congratulations! you have earned 3 To-Do List points." : "Uh oh! you missed a chance to earn To-Do List points. Sign-in now to save points";
-            this.shareToast(message)
+            this.shareSuccessToast(message);
         });
     }
 
@@ -144,8 +153,8 @@ class Main extends Component {
         return (
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
-                <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} updateUserLoggedIn={this.updateUserLoggedIn} />
-                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo} />
+                <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} updateUserLoggedIn={this.updateUserLoggedIn} shareSuccessToast={this.shareSuccessToast} shareErrorToast={this.shareErrorToast} shareInfoToast={this.shareInfoToast} />
+                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo} shareErrorToast={this.shareErrorToast} />
                 <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} data={completedtodos} {...this.state} />
                 {isUserLoggedIn ? <>
                     {isLoading ?
