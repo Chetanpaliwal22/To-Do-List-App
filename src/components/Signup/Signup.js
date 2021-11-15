@@ -82,6 +82,7 @@ class Signup extends Component {
 
         db.collection('User').doc(userInfo.userId.toString()).set(userInfo).then(() => {
             this.props.toggleLoadingMode();
+            this.props.updateUserInfo(userInfo);
         }).catch((error) => {
             console.error("Error writing document: ", error);
         });

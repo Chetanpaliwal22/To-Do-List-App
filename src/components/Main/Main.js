@@ -139,7 +139,7 @@ class Main extends Component {
             <div>
                 <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} updateUserLoggedIn={this.updateUserLoggedIn} />
-                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} />
+                <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo}/>
                 <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} data={completedtodos} {...this.state} />
                 {isUserLoggedIn ? <>
                     {isLoading ?
@@ -161,7 +161,7 @@ class Main extends Component {
                                         <Link onClick={() => this.toggleShowTaskFormMode(true)}>Add Task</Link>
                                     </div>
                                 </div>} </div>}
-                </> : <Home {...this.state} toggleSigninPopup={this.toggleSigninPopup} />
+                </> : <Home {...this.state} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup}/>
                 }
             </div>
         )

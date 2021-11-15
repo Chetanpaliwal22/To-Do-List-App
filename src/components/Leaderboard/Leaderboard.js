@@ -5,6 +5,7 @@ class Leaderboard extends Component {
 
     render() {
         const { showLeaderboardPopup, toggleLeaderboardPopup } = this.props;
+        const score = this.props.data.length * 3;
 
         return (
             <Modal show={showLeaderboardPopup} onHide={() => toggleLeaderboardPopup()} >
@@ -13,8 +14,8 @@ class Leaderboard extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div >
-                        <h5>Great you have scored - {this.props.data.length * 3} To-Doist points.</h5>
-                        <h9>In the next release, you will be able to see the leadership board.</h9>
+                        {score > 0 ? <h5> Great you have scored - {score} To-Do List points.</h5> : <h5> Your current score is 0. You can earn To-Do List point by completing tasks.</h5>}
+                        <p>In the next release, you will be able to see the leadership board.</p>
                     </div>
                 </Modal.Body>
             </Modal >
