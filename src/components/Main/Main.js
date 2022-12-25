@@ -7,6 +7,7 @@ import TaskForm from "../TaskForm/TaskForm";
 import Signin from '../Signin/Signin';
 import Signup from "../Signup/Signup";
 import Leaderboard from "../Leaderboard/Leaderboard";
+import Profile from "../Profile/Profile";
 import firebase from "firebase";
 import Loading from '../Loading/Loading';
 import { toast } from 'react-toastify';
@@ -33,6 +34,7 @@ class Main extends Component {
             showSigninPopup: false,
             showSignupPopup: false,
             showLeaderboardPopup: false,
+            showProfilePopup: false,
             releaseVersion: '1.0'
         }
     }
@@ -65,6 +67,7 @@ class Main extends Component {
     toggleSigninPopup = () => this.setState({ showSigninPopup: !this.state.showSigninPopup });
     toggleSignupPopup = () => this.setState({ showSignupPopup: !this.state.showSignupPopup });
     toggleLeaderboardPopup = () => this.setState({ showLeaderboardPopup: !this.state.showLeaderboardPopup });
+    toggleProfilePopup = () => this.setState({ showProfilePopup: !this.state.showProfilePopup });
     toggleLoadingMode = () => this.setState({ isLoading: !this.state.isLoading });
 
     toastConfig = {
@@ -152,10 +155,11 @@ class Main extends Component {
         toast.configure();
         return (
             <div>
-                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} handleLogOut={this.handleLogOut} {...this.state} />
+                <Header toggleCompletedTaskMode={this.toggleCompletedTaskMode} toggleSigninPopup={this.toggleSigninPopup} toggleSignupPopup={this.toggleSignupPopup} toggleLeaderboardPopup={this.toggleLeaderboardPopup} toggleProfilePopup={this.toggleProfilePopup} handleLogOut={this.handleLogOut} {...this.state} />
                 <Signin toggleSigninPopup={this.toggleSigninPopup} toggleLoadingMode={this.toggleLoadingMode} updateContent={this.updateContent} {...this.state} updateUserInfo={this.updateUserInfo} updateUserLoggedIn={this.updateUserLoggedIn} shareSuccessToast={this.shareSuccessToast} shareErrorToast={this.shareErrorToast} shareInfoToast={this.shareInfoToast} />
                 <Signup toggleSignupPopup={this.toggleSignupPopup} toggleLoadingMode={this.toggleLoadingMode} {...this.state} updateUserInfo={this.updateUserInfo} shareErrorToast={this.shareErrorToast} />
                 <Leaderboard toggleLeaderboardPopup={this.toggleLeaderboardPopup} data={completedtodos} {...this.state} />
+                <Profile toggleProfilePopup={this.toggleProfilePopup} {...this.state} />
                 {isUserLoggedIn ? <>
                     {isLoading ?
                         <Loading /> : <div>
