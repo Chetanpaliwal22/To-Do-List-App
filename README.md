@@ -1,12 +1,4 @@
-## What is React?
-
-React is an open-sourced JavaScript library for building user interfaces developed and maintained by Facebook developers.
-
-## What is Firestore DB?
-
-Firestore is a noSQL database that you can use to store and fetch user generated data.
-
-## React To-Do App
+## To-Do App
 
 A simple To-Do App to understand the basic functionality of React and noSQL database - Firebase.
 
