@@ -5,7 +5,7 @@
   "homepage": "http://Chetanpaliwal22.github.io/To-Do-List-App",
   "dependencies": {
     "-": "0.0.1",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^12.1.5",
     "bootstrap": "^4.6.0",
     "firebase": "^7.14.6",
     "font-awesome": "^4.7.0",
